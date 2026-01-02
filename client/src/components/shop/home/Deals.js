@@ -77,7 +77,7 @@ const Deals = () => {
       <div className="container mx-auto px-4 pb-12">
         {products.length === 0 ? (
           <div className="text-center py-20">
-            <p className="text-xl text-gray-600">Şu anda indirimli ürün bulunmamaktadır.</p>
+            <p className="text-xl text-gray-600">Şu anda indirimde ürün bulunmamaktadır.</p>
           </div>
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">

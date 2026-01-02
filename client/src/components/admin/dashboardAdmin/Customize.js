@@ -33,7 +33,7 @@ const Customize = () => {
                 clipRule="evenodd"
               />
             </svg>
-            Customize Slider Image
+            Slider Resmi Özelleştir
           </div>
         ) : (
           ""

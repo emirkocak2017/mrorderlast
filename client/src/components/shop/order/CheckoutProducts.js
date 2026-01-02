@@ -48,14 +48,14 @@ export const CheckoutComponent = (props) => {
             d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"
           ></path>
         </svg>
-        Please wait untill finish
+        Lütfen bekleyiniz...
       </div>
     );
   }
   return (
     <Fragment>
       <section className="mx-4 mt-20 md:mx-12 md:mt-32 lg:mt-24">
-        <div className="text-2xl mx-2">Order</div>
+        <div className="text-2xl mx-2">Sipariş</div>
         {/* Product List */}
         <div className="flex flex-col md:flex md:space-x-2 md:flex-row">
           <div className="md:w-1/2">
@@ -77,7 +77,7 @@ export const CheckoutComponent = (props) => {
                   )}
                   <div className="flex flex-col py-2">
                     <label htmlFor="address" className="pb-2">
-                      Dalivery Address
+                      Teslimat Adresi
                     </label>
                     <input
                       value={state.address}
@@ -91,12 +91,12 @@ export const CheckoutComponent = (props) => {
                       type="text"
                       id="address"
                       className="border px-4 py-2"
-                      placeholder="Address..."
+                      placeholder="Adres..."
                     />
                   </div>
                   <div className="flex flex-col py-2 mb-2">
                     <label htmlFor="phone" className="pb-2">
-                      Phone
+                      Telefon
                     </label>
                     <input
                       value={state.phone}
@@ -110,7 +110,7 @@ export const CheckoutComponent = (props) => {
                       type="number"
                       id="phone"
                       className="border px-4 py-2"
-                      placeholder="+880"
+                      placeholder="+90 555 123 45 67"
                     />
                   </div>
                   <DropIn
@@ -137,7 +137,7 @@ export const CheckoutComponent = (props) => {
                     className="w-full px-4 py-2 text-center text-white font-semibold cursor-pointer"
                     style={{ background: "#303031" }}
                   >
-                    Pay now
+                    Ödeme Yap
                   </div>
                 </div>
               </Fragment>
@@ -190,20 +190,20 @@ const CheckoutProducts = ({ products }) => {
                     {product.pName}
                   </div>
                   <div className="md:ml-6 font-semibold text-gray-600 text-sm">
-                    Price : ${product.pPrice}.00{" "}
+                    Fiyat : {product.pPrice}₺
                   </div>
                   <div className="md:ml-6 font-semibold text-gray-600 text-sm">
-                    Quantitiy : {quantity(product._id)}
+                    Miktar : {quantity(product._id)}
                   </div>
                   <div className="font-semibold text-gray-600 text-sm">
-                    Subtotal : ${subTotal(product._id, product.pPrice)}.00
+                    Ara Toplam : {subTotal(product._id, product.pPrice)}₺
                   </div>
                 </div>
               </div>
             );
           })
         ) : (
-          <div>No product found for checkout</div>
+          <div>Sipariş için ürün bulunamadı</div>
         )}
       </div>
     </Fragment>

@@ -379,7 +379,7 @@ const EditProductModal = (props) => {
                 <label className="flex items-center space-x-2">
                   <input
                     type="checkbox"
-                    checked={editformData.offer}
+                    checked={editformData.offer === true || editformData.offer === 'true'}
                     onChange={(e) =>
                       setEditformdata({
                         ...editformData,

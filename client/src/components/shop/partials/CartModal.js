@@ -73,7 +73,7 @@ const CartModal = () => {
         >
           <div className="overflow-y-auto">
             <div className="border-b border-gray-700 flex justify-between">
-              <div className="p-4 text-white text-lg font-semibold">Cart</div>
+              <div className="p-4 text-white text-lg font-semibold">Sepet</div>
               {/* Cart Modal Close Button */}
               <div className="p-4 text-white">
                 <svg
@@ -109,7 +109,7 @@ const CartModal = () => {
                           <div className="flex items-center justify-between">
                             <div className="flex items-center justify-between space-x-2">
                               <div className="text-sm text-gray-400">
-                                Quantity :
+                                Miktar :
                               </div>
                               <div className="flex items-end">
                                 <span className="text-sm text-gray-200">
@@ -120,9 +120,9 @@ const CartModal = () => {
                             <div>
                               {" "}
                               <span className="text-sm text-gray-400">
-                                Subtotoal :
+                                Ara Toplam :
                               </span>{" "}
-                              ${subTotal(item._id, item.pPrice)}.00
+                              {subTotal(item._id, item.pPrice)}₺
                             </div>{" "}
                             {/* SUbtotal Count */}
                           </div>
@@ -153,7 +153,7 @@ const CartModal = () => {
 
               {products === null && (
                 <div className="m-4 flex-col text-white text-xl text-center">
-                  No product in cart
+                  Sepette ürün yok
                 </div>
               )}
             </div>
@@ -163,7 +163,7 @@ const CartModal = () => {
               onClick={(e) => cartModalOpen()}
               className="cursor-pointer px-4 py-2 border border-gray-400 text-white text-center cursor-pointer"
             >
-              Continue shopping
+              Alışverişe Devam Et
             </div>
             {data.cartTotalCost ? (
               <Fragment>
@@ -175,7 +175,7 @@ const CartModal = () => {
                       cartModalOpen();
                     }}
                   >
-                    Checkout ${data.cartTotalCost}.00
+                    Ödeme Yap {data.cartTotalCost}₺
                   </div>
                 ) : (
                   <div
@@ -193,7 +193,7 @@ const CartModal = () => {
                       });
                     }}
                   >
-                    Checkout ${data.cartTotalCost}.00
+                    Ödeme Yap {data.cartTotalCost}₺
                   </div>
                 )}
               </Fragment>

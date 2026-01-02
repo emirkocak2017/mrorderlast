@@ -358,7 +358,10 @@ class Product {
   async getLiveSalesProducts(req, res) {
     try {
       let Products = await productModel
-        .find({ videoUrl: { $ne: null, $exists: true } })
+        .find({ 
+          videoUrl: { $ne: null, $exists: true, $ne: "" },
+          pStatus: "Active"
+        })
         .populate("pCategory", "_id cName")
         .sort({ _id: -1 });
       if (Products) {
@@ -373,7 +376,10 @@ class Product {
   async getDealProducts(req, res) {
     try {
       let Products = await productModel
-        .find({ offer: true })
+        .find({ 
+          offer: true,
+          pStatus: "Active"
+        })
         .populate("pCategory", "_id cName")
         .sort({ _id: -1 });
       if (Products) {

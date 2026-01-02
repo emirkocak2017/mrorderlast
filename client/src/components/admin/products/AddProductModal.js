@@ -339,15 +339,15 @@ const AddProductDetail = ({ categories }) => {
                 <label className="flex items-center space-x-2">
                   <input
                     type="checkbox"
-                    checked={fData.offer}
-                    onChange={(e) =>
-                      setFdata({
-                        ...fData,
-                        error: false,
-                        success: false,
-                        offer: e.target.checked,
-                      })
-                    }
+                checked={fData.offer === true || fData.offer === 'true'}
+                onChange={(e) =>
+                  setFdata({
+                    ...fData,
+                    error: false,
+                    success: false,
+                    offer: e.target.checked,
+                  })
+                }
                     className="w-4 h-4"
                   />
                   <span>İndirim Var mı? *</span>

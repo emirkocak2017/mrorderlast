@@ -77,16 +77,16 @@ const AllProduct = (props) => {
         <table className="table-auto border w-full my-2">
           <thead>
             <tr>
-              <th className="px-4 py-2 border">Product</th>
-              <th className="px-4 py-2 border">Description</th>
-              <th className="px-4 py-2 border">Image</th>
-              <th className="px-4 py-2 border">Status</th>
-              <th className="px-4 py-2 border">Stock</th>
-              <th className="px-4 py-2 border">Category</th>
-              <th className="px-4 py-2 border">Offer</th>
-              <th className="px-4 py-2 border">Created at</th>
-              <th className="px-4 py-2 border">Updated at</th>
-              <th className="px-4 py-2 border">Actions</th>
+              <th className="px-4 py-2 border">Ürün</th>
+              <th className="px-4 py-2 border">Açıklama</th>
+              <th className="px-4 py-2 border">Resim</th>
+              <th className="px-4 py-2 border">Durum</th>
+              <th className="px-4 py-2 border">Stok</th>
+              <th className="px-4 py-2 border">Kategori</th>
+              <th className="px-4 py-2 border">İndirim</th>
+              <th className="px-4 py-2 border">Oluşturulma</th>
+              <th className="px-4 py-2 border">Güncelleme</th>
+              <th className="px-4 py-2 border">İşlemler</th>
             </tr>
           </thead>
           <tbody>
@@ -109,7 +109,7 @@ const AllProduct = (props) => {
                   colSpan="10"
                   className="text-xl text-center font-semibold py-8"
                 >
-                  No product found
+                  Ürün bulunamadı
                 </td>
               </tr>
             )}

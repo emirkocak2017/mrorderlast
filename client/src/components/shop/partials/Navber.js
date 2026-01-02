@@ -203,7 +203,7 @@ const Navber = (props) => {
                                 />
                               </svg>
                             </span>
-                            <span>My Wishlist</span>
+                            <span>Favorilerim</span>
                           </span>
                           <span
                             onClick={(e) => history.push("/user/setting")}
@@ -231,7 +231,7 @@ const Navber = (props) => {
                                 />
                               </svg>
                             </span>
-                            <span>Setting</span>
+                            <span>Ayarlar</span>
                           </span>
                           <span
                             onClick={(e) => logout()}
@@ -253,7 +253,7 @@ const Navber = (props) => {
                                 />
                               </svg>
                             </span>
-                            <span>Logout</span>
+                            <span>Çıkış Yap</span>
                           </span>
                         </li>
                       </Fragment>
@@ -286,7 +286,7 @@ const Navber = (props) => {
                                 />
                               </svg>
                             </span>
-                            <span>Admin Panel</span>
+                            <span>Yönetici Paneli</span>
                           </span>
                           <span
                             onClick={(e) => logout()}
@@ -308,7 +308,7 @@ const Navber = (props) => {
                                 />
                               </svg>
                             </span>
-                            <span>Logout</span>
+                            <span>Çıkış Yap</span>
                           </span>
                         </li>
                       </Fragment>

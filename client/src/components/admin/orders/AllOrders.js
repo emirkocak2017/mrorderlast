@@ -41,17 +41,17 @@ const AllCategory = (props) => {
         <table className="table-auto border w-full my-2">
           <thead>
             <tr>
-              <th className="px-4 py-2 border">Products</th>
-              <th className="px-4 py-2 border">Status</th>
+              <th className="px-4 py-2 border">Ürünler</th>
+              <th className="px-4 py-2 border">Durum</th>
               <th className="px-4 py-2 border">Toplam</th>
-              <th className="px-4 py-2 border">Transaction Id</th>
-              <th className="px-4 py-2 border">Customer</th>
-              <th className="px-4 py-2 border">Email</th>
-              <th className="px-4 py-2 border">Phone</th>
-              <th className="px-4 py-2 border">Address</th>
-              <th className="px-4 py-2 border">Created at</th>
-              <th className="px-4 py-2 border">Updated at</th>
-              <th className="px-4 py-2 border">Actions</th>
+              <th className="px-4 py-2 border">İşlem ID</th>
+              <th className="px-4 py-2 border">Müşteri</th>
+              <th className="px-4 py-2 border">E-posta</th>
+              <th className="px-4 py-2 border">Telefon</th>
+              <th className="px-4 py-2 border">Adres</th>
+              <th className="px-4 py-2 border">Oluşturulma</th>
+              <th className="px-4 py-2 border">Güncelleme</th>
+              <th className="px-4 py-2 border">İşlemler</th>
             </tr>
           </thead>
           <tbody>
@@ -137,7 +137,7 @@ const CategoryTable = ({ order, editOrder }) => {
           )}
         </td>
         <td className="hover:bg-gray-200 p-2 text-center">
-          ${order.amount}.00
+          {order.amount}₺
         </td>
         <td className="hover:bg-gray-200 p-2 text-center">
           {order.transactionId}
