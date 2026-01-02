@@ -9,6 +9,9 @@ import {
   ProductDetails,
   ProductByCategory,
   CheckoutPage,
+  LiveSales,
+  Deals,
+  ContactUs,
 } from "./shop";
 import { DashboardAdmin, Categories, Products, Orders } from "./admin";
 import { UserProfile, UserOrders, SettingUser } from "./shop/dashboardUser";
@@ -29,6 +32,9 @@ const Routes = (props) => {
           path="/products/category/:catId"
           component={ProductByCategory}
         />
+        <Route exact path="/live-sales" component={LiveSales} />
+        <Route exact path="/deals" component={Deals} />
+        <Route exact path="/contact-us" component={ContactUs} />
         <CartProtectedRoute
           exact={true}
           path="/checkout"

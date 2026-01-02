@@ -42,7 +42,7 @@ class Product {
   }
 
   async postAddProduct(req, res) {
-    let { pName, pDescription, pPrice, pQuantity, pCategory, pOffer, pStatus } =
+    let { pName, pDescription, pPrice, pQuantity, pCategory, pOffer, pStatus, videoUrl, offer, offerPrice } =
       req.body;
     let images = req.files;
     // Validation
@@ -84,6 +84,9 @@ class Product {
           pCategory,
           pOffer,
           pStatus,
+          videoUrl: videoUrl || null,
+          offer: offer === 'true' || offer === true,
+          offerPrice: offerPrice || 0,
         });
         let save = await newProduct.save();
         if (save) {
@@ -106,6 +109,9 @@ class Product {
       pOffer,
       pStatus,
       pImages,
+      videoUrl,
+      offer,
+      offerPrice,
     } = req.body;
     let editImages = req.files;
 
@@ -141,6 +147,9 @@ class Product {
         pCategory,
         pOffer,
         pStatus,
+        videoUrl: videoUrl || null,
+        offer: offer === 'true' || offer === true,
+        offerPrice: offerPrice || 0,
       };
       if (editImages.length == 2) {
         let allEditImages = [];
@@ -328,7 +337,7 @@ class Product {
   async deleteReview(req, res) {
     let { rId, pId } = req.body;
     if (!rId) {
-      return res.json({ message: "All filled must be required" });
+      return res.json({ message: "Tüm alanlar doldurulmalıdır" });
     } else {
       try {
         let reviewDelete = productModel.findByIdAndUpdate(pId, {
@@ -338,11 +347,41 @@ class Product {
           if (err) {
             console.log(err);
           }
-          return res.json({ success: "Your review is deleted" });
+          return res.json({ success: "Yorumunuz silindi" });
         });
       } catch (err) {
         console.log(err);
       }
+    }
+  }
+
+  async getLiveSalesProducts(req, res) {
+    try {
+      let Products = await productModel
+        .find({ videoUrl: { $ne: null, $exists: true } })
+        .populate("pCategory", "_id cName")
+        .sort({ _id: -1 });
+      if (Products) {
+        return res.json({ Products });
+      }
+    } catch (err) {
+      console.log(err);
+      return res.json({ error: "Canlı satış ürünleri getirilirken bir hata oluştu" });
+    }
+  }
+
+  async getDealProducts(req, res) {
+    try {
+      let Products = await productModel
+        .find({ offer: true })
+        .populate("pCategory", "_id cName")
+        .sort({ _id: -1 });
+      if (Products) {
+        return res.json({ Products });
+      }
+    } catch (err) {
+      console.log(err);
+      return res.json({ error: "İndirimli ürünler getirilirken bir hata oluştu" });
     }
   }
 }

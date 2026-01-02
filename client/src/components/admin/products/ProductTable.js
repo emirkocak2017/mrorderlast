@@ -116,7 +116,7 @@ const AllProduct = (props) => {
           </tbody>
         </table>
         <div className="text-sm text-gray-600 mt-2">
-          Total {products && products.length} product found
+          Toplam {products && products.length} ürün bulundu
         </div>
       </div>
     </Fragment>

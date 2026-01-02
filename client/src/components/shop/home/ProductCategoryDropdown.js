@@ -51,7 +51,7 @@ const CategoryList = () => {
             );
           })
         ) : (
-          <div className="text-xl text-center my-4">No Category</div>
+          <div className="text-xl text-center my-4">Kategori Yok</div>
         )}
       </div>
     </div>
@@ -104,12 +104,12 @@ const FilterList = () => {
     <div className={`${data.filterListDropdown ? "" : "hidden"} my-4`}>
       <hr />
       <div className="w-full flex flex-col">
-        <div className="font-medium py-2">Filter by price</div>
+        <div className="font-medium py-2">Fiyata Göre Filtrele</div>
         <div className="flex justify-between items-center">
           <div className="flex flex-col space-y-2  w-2/3 lg:w-2/4">
             <label htmlFor="points" className="text-sm">
-              Price (between 0 and 10$):{" "}
-              <span className="font-semibold text-yellow-700">{range}.00$</span>{" "}
+              Fiyat (0 ile 1000₺ arası):{" "}
+              <span className="font-semibold text-yellow-700">{range}₺</span>{" "}
             </label>
             <input
               value={range}
@@ -192,7 +192,7 @@ const Search = () => {
         onChange={(e) => searchHandle(e)}
         className="px-4 text-xl py-4 focus:outline-none"
         type="text"
-        placeholder="Search products..."
+        placeholder="Ürün ara..."
       />
       <div onClick={(e) => closeSearchBar()} className="cursor-pointer">
         <svg

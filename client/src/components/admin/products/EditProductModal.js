@@ -24,6 +24,9 @@ const EditProductModal = (props) => {
     pQuantity: "",
     pPrice: "",
     pOffer: "",
+    videoUrl: "",
+    offer: false,
+    offerPrice: 0,
     error: false,
     success: false,
   });
@@ -49,7 +52,10 @@ const EditProductModal = (props) => {
       pCategory: data.editProductModal.pCategory,
       pQuantity: data.editProductModal.pQuantity,
       pPrice: data.editProductModal.pPrice,
-      pOffer: data.editProductModal.pOffer,
+      pOffer: data.editProductModal.pOffer || "",
+      videoUrl: data.editProductModal.videoUrl || "",
+      offer: data.editProductModal.offer || false,
+      offerPrice: data.editProductModal.offerPrice || 0,
     });
   }, [data.editProductModal]);
 
@@ -117,7 +123,7 @@ const EditProductModal = (props) => {
         <div className="mt-32 md:mt-0 relative bg-white w-11/12 md:w-3/6 shadow-lg flex flex-col items-center space-y-4 px-4 py-4 md:px-8">
           <div className="flex items-center justify-between w-full pt-4">
             <span className="text-left font-semibold text-2xl tracking-wider">
-              Edit Product
+              Ürün Düzenle
             </span>
             {/* Close Modal */}
             <span
@@ -148,7 +154,7 @@ const EditProductModal = (props) => {
           <form className="w-full" onSubmit={(e) => submitForm(e)}>
             <div className="flex space-x-1 py-4">
               <div className="w-1/2 flex flex-col space-y-1 space-x-1">
-                <label htmlFor="name">Product Name *</label>
+                <label htmlFor="name">Ürün Adı *</label>
                 <input
                   value={editformData.pName}
                   onChange={(e) =>
@@ -164,7 +170,7 @@ const EditProductModal = (props) => {
                 />
               </div>
               <div className="w-1/2 flex flex-col space-y-1 space-x-1">
-                <label htmlFor="price">Product Price *</label>
+                <label htmlFor="price">Ürün Fiyatı *</label>
                 <input
                   value={editformData.pPrice}
                   onChange={(e) =>
@@ -182,7 +188,7 @@ const EditProductModal = (props) => {
               </div>
             </div>
             <div className="flex flex-col space-y-2">
-              <label htmlFor="description">Product Description *</label>
+              <label htmlFor="description">Ürün Açıklaması *</label>
               <textarea
                 value={editformData.pDescription}
                 onChange={(e) =>
@@ -202,24 +208,26 @@ const EditProductModal = (props) => {
             </div>
             {/* Most Important part for uploading multiple image */}
             <div className="flex flex-col mt-4">
-              <label htmlFor="image">Product Images *</label>
+              <label htmlFor="image">Ürün Resimleri *</label>
               {editformData.pImages ? (
-                <div className="flex space-x-1">
+                <div className="flex space-x-1 mb-2">
                   <img
-                    className="h-16 w-16 object-cover"
+                    className="h-16 w-16 object-cover border"
                     src={`${apiURL}/uploads/products/${editformData.pImages[0]}`}
                     alt="productImage"
                   />
-                  <img
-                    className="h-16 w-16 object-cover"
-                    src={`${apiURL}/uploads/products/${editformData.pImages[1]}`}
-                    alt="productImage"
-                  />
+                  {editformData.pImages[1] && (
+                    <img
+                      className="h-16 w-16 object-cover border"
+                      src={`${apiURL}/uploads/products/${editformData.pImages[1]}`}
+                      alt="productImage"
+                    />
+                  )}
                 </div>
               ) : (
                 ""
               )}
-              <span className="text-gray-600 text-xs">Must need 2 images</span>
+              <span className="text-gray-600 text-xs mb-2">2 resim gereklidir (değiştirmek için yeni resim seçiniz)</span>
               <input
                 onChange={(e) =>
                   setEditformdata({
@@ -239,7 +247,7 @@ const EditProductModal = (props) => {
             {/* Most Important part for uploading multiple image */}
             <div className="flex space-x-1 py-4">
               <div className="w-1/2 flex flex-col space-y-1">
-                <label htmlFor="status">Product Status *</label>
+                <label htmlFor="status">Ürün Durumu *</label>
                 <select
                   value={editformData.pStatus}
                   onChange={(e) =>
@@ -255,16 +263,17 @@ const EditProductModal = (props) => {
                   id="status"
                 >
                   <option name="status" value="Active">
-                    Active
+                    Aktif
                   </option>
                   <option name="status" value="Disabled">
-                    Disabled
+                    Pasif
                   </option>
                 </select>
               </div>
               <div className="w-1/2 flex flex-col space-y-1">
-                <label htmlFor="status">Product Category *</label>
+                <label htmlFor="status">Ürün Kategorisi *</label>
                 <select
+                  value={editformData.pCategory._id || editformData.pCategory}
                   onChange={(e) =>
                     setEditformdata({
                       ...editformData,
@@ -278,7 +287,7 @@ const EditProductModal = (props) => {
                   id="status"
                 >
                   <option disabled value="">
-                    Select a category
+                    Kategori seçiniz
                   </option>
                   {categories && categories.length > 0
                     ? categories.map((elem) => {
@@ -312,7 +321,7 @@ const EditProductModal = (props) => {
             </div>
             <div className="flex space-x-1 py-4">
               <div className="w-1/2 flex flex-col space-y-1">
-                <label htmlFor="quantity">Product in Stock *</label>
+                <label htmlFor="quantity">Stok Miktarı *</label>
                 <input
                   value={editformData.pQuantity}
                   onChange={(e) =>
@@ -329,7 +338,7 @@ const EditProductModal = (props) => {
                 />
               </div>
               <div className="w-1/2 flex flex-col space-y-1">
-                <label htmlFor="offer">Product Offfer (%) *</label>
+                <label htmlFor="offer">Ürün İndirimi (%) *</label>
                 <input
                   value={editformData.pOffer}
                   onChange={(e) =>
@@ -346,13 +355,72 @@ const EditProductModal = (props) => {
                 />
               </div>
             </div>
+            <div className="flex flex-col space-y-2 py-4">
+              <label htmlFor="videoUrl">Video URL (Canlı Satış için)</label>
+              <input
+                value={editformData.videoUrl}
+                onChange={(e) =>
+                  setEditformdata({
+                    ...editformData,
+                    error: false,
+                    success: false,
+                    videoUrl: e.target.value,
+                  })
+                }
+                type="url"
+                className="px-4 py-2 border focus:outline-none"
+                id="videoUrl"
+                placeholder="https://example.com/video.mp4 veya YouTube/Vimeo linki"
+              />
+              <span className="text-gray-600 text-xs">Canlı satış sayfasında görüntülenmek için video URL'si ekleyiniz</span>
+            </div>
+            <div className="flex space-x-1 py-4">
+              <div className="w-1/2 flex flex-col space-y-1">
+                <label className="flex items-center space-x-2">
+                  <input
+                    type="checkbox"
+                    checked={editformData.offer}
+                    onChange={(e) =>
+                      setEditformdata({
+                        ...editformData,
+                        error: false,
+                        success: false,
+                        offer: e.target.checked,
+                      })
+                    }
+                    className="w-4 h-4"
+                  />
+                  <span>İndirim Var mı? *</span>
+                </label>
+              </div>
+              {editformData.offer && (
+                <div className="w-1/2 flex flex-col space-y-1">
+                  <label htmlFor="offerPrice">İndirimli Fiyat *</label>
+                  <input
+                    value={editformData.offerPrice}
+                    onChange={(e) =>
+                      setEditformdata({
+                        ...editformData,
+                        error: false,
+                        success: false,
+                        offerPrice: e.target.value,
+                      })
+                    }
+                    type="number"
+                    className="px-4 py-2 border focus:outline-none"
+                    id="offerPrice"
+                    min="0"
+                  />
+                </div>
+              )}
+            </div>
             <div className="flex flex-col space-y-1 w-full pb-4 md:pb-6 mt-4">
               <button
                 style={{ background: "#303031" }}
                 type="submit"
                 className="rounded-full bg-gray-800 text-gray-100 text-lg font-medium py-2"
               >
-                Update product
+                Ürünü Güncelle
               </button>
             </div>
           </form>

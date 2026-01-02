@@ -35,6 +35,18 @@ const productSchema = new mongoose.Schema(
       type: String,
       default: null,
     },
+    offer: {
+      type: Boolean,
+      default: false,
+    },
+    offerPrice: {
+      type: Number,
+      default: 0,
+    },
+    videoUrl: {
+      type: String,
+      default: null,
+    },
     pRatingsReviews: [
       {
         review: String,

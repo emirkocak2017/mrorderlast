@@ -36,7 +36,7 @@ const AdminSidebar = (props) => {
               />
             </svg>
           </span>
-          <span className="hover:text-gray-800">Dashboard</span>
+          <span className="hover:text-gray-800">Kontrol Paneli</span>
         </div>
         <hr className="border-b border-gray-200" />
         <div
@@ -63,7 +63,7 @@ const AdminSidebar = (props) => {
               />
             </svg>
           </span>
-          <span className="hover:text-gray-800">Categories</span>
+          <span className="hover:text-gray-800">Kategoriler</span>
         </div>
         <hr className="border-b border-gray-200" />
         <div
@@ -90,7 +90,7 @@ const AdminSidebar = (props) => {
               />
             </svg>
           </span>
-          <span className="hover:text-gray-800">Product</span>
+          <span className="hover:text-gray-800">Ürünler</span>
         </div>
         <hr className="border-b border-gray-200" />
         <div
@@ -117,7 +117,7 @@ const AdminSidebar = (props) => {
               />
             </svg>
           </span>
-          <span className="hover:text-gray-800">Order</span>
+          <span className="hover:text-gray-800">Siparişler</span>
         </div>
         <hr className="border-b border-gray-200" />
       </div>

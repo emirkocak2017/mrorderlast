@@ -19,6 +19,9 @@ const AddProductDetail = ({ categories }) => {
     pPrice: "",
     pOffer: 0,
     pQuantity: "",
+    videoUrl: "",
+    offer: false,
+    offerPrice: 0,
     success: false,
     error: false,
   });
@@ -39,11 +42,12 @@ const AddProductDetail = ({ categories }) => {
     e.preventDefault();
     e.target.reset();
 
-    if (!fData.pImage) {
-      setFdata({ ...fData, error: "Please upload at least 2 image" });
+    if (!fData.pImage || (Array.isArray(fData.pImage) && fData.pImage.length < 2)) {
+      setFdata({ ...fData, error: "Lütfen en az 2 resim yükleyiniz" });
       setTimeout(() => {
         setFdata({ ...fData, error: false });
       }, 2000);
+      return;
     }
 
     try {
@@ -60,6 +64,9 @@ const AddProductDetail = ({ categories }) => {
           pPrice: "",
           pQuantity: "",
           pOffer: 0,
+          videoUrl: "",
+          offer: false,
+          offerPrice: 0,
           success: responseData.success,
           error: false,
         });
@@ -74,6 +81,9 @@ const AddProductDetail = ({ categories }) => {
             pPrice: "",
             pQuantity: "",
             pOffer: 0,
+            videoUrl: "",
+            offer: false,
+            offerPrice: 0,
             success: false,
             error: false,
           });
@@ -109,7 +119,7 @@ const AddProductDetail = ({ categories }) => {
         <div className="mt-32 md:mt-0 relative bg-white w-11/12 md:w-3/6 shadow-lg flex flex-col items-center space-y-4 px-4 py-4 md:px-8">
           <div className="flex items-center justify-between w-full pt-4">
             <span className="text-left font-semibold text-2xl tracking-wider">
-              Add Product
+              Ürün Ekle
             </span>
             {/* Close Modal */}
             <span
@@ -140,7 +150,7 @@ const AddProductDetail = ({ categories }) => {
           <form className="w-full" onSubmit={(e) => submitForm(e)}>
             <div className="flex space-x-1 py-4">
               <div className="w-1/2 flex flex-col space-y-1 space-x-1">
-                <label htmlFor="name">Product Name *</label>
+                <label htmlFor="name">Ürün Adı *</label>
                 <input
                   value={fData.pName}
                   onChange={(e) =>
@@ -156,7 +166,7 @@ const AddProductDetail = ({ categories }) => {
                 />
               </div>
               <div className="w-1/2 flex flex-col space-y-1 space-x-1">
-                <label htmlFor="price">Product Price *</label>
+                <label htmlFor="price">Ürün Fiyatı *</label>
                 <input
                   value={fData.pPrice}
                   onChange={(e) =>
@@ -174,7 +184,7 @@ const AddProductDetail = ({ categories }) => {
               </div>
             </div>
             <div className="flex flex-col space-y-2">
-              <label htmlFor="description">Product Description *</label>
+              <label htmlFor="description">Ürün Açıklaması *</label>
               <textarea
                 value={fData.pDescription}
                 onChange={(e) =>
@@ -194,8 +204,8 @@ const AddProductDetail = ({ categories }) => {
             </div>
             {/* Most Important part for uploading multiple image */}
             <div className="flex flex-col mt-4">
-              <label htmlFor="image">Product Images *</label>
-              <span className="text-gray-600 text-xs">Must need 2 images</span>
+              <label htmlFor="image">Ürün Resimleri *</label>
+              <span className="text-gray-600 text-xs">2 resim gereklidir</span>
               <input
                 onChange={(e) =>
                   setFdata({
@@ -215,7 +225,7 @@ const AddProductDetail = ({ categories }) => {
             {/* Most Important part for uploading multiple image */}
             <div className="flex space-x-1 py-4">
               <div className="w-1/2 flex flex-col space-y-1">
-                <label htmlFor="status">Product Status *</label>
+                <label htmlFor="status">Ürün Durumu *</label>
                 <select
                   value={fData.pStatus}
                   onChange={(e) =>
@@ -231,15 +241,15 @@ const AddProductDetail = ({ categories }) => {
                   id="status"
                 >
                   <option name="status" value="Active">
-                    Active
+                    Aktif
                   </option>
                   <option name="status" value="Disabled">
-                    Disabled
+                    Pasif
                   </option>
                 </select>
               </div>
               <div className="w-1/2 flex flex-col space-y-1">
-                <label htmlFor="status">Product Category *</label>
+                <label htmlFor="status">Ürün Kategorisi *</label>
                 <select
                   value={fData.pCategory}
                   onChange={(e) =>
@@ -255,7 +265,7 @@ const AddProductDetail = ({ categories }) => {
                   id="status"
                 >
                   <option disabled value="">
-                    Select a category
+                    Kategori seçiniz
                   </option>
                   {categories.length > 0
                     ? categories.map(function (elem) {
@@ -271,7 +281,7 @@ const AddProductDetail = ({ categories }) => {
             </div>
             <div className="flex space-x-1 py-4">
               <div className="w-1/2 flex flex-col space-y-1">
-                <label htmlFor="quantity">Product in Stock *</label>
+                <label htmlFor="quantity">Stok Miktarı *</label>
                 <input
                   value={fData.pQuantity}
                   onChange={(e) =>
@@ -288,7 +298,7 @@ const AddProductDetail = ({ categories }) => {
                 />
               </div>
               <div className="w-1/2 flex flex-col space-y-1">
-                <label htmlFor="offer">Product Offfer (%) *</label>
+                <label htmlFor="offer">Ürün İndirimi (%) *</label>
                 <input
                   value={fData.pOffer}
                   onChange={(e) =>
@@ -305,13 +315,72 @@ const AddProductDetail = ({ categories }) => {
                 />
               </div>
             </div>
+            <div className="flex flex-col space-y-2 py-4">
+              <label htmlFor="videoUrl">Video URL (Canlı Satış için)</label>
+              <input
+                value={fData.videoUrl}
+                onChange={(e) =>
+                  setFdata({
+                    ...fData,
+                    error: false,
+                    success: false,
+                    videoUrl: e.target.value,
+                  })
+                }
+                type="url"
+                className="px-4 py-2 border focus:outline-none"
+                id="videoUrl"
+                placeholder="https://example.com/video.mp4 veya YouTube/Vimeo linki"
+              />
+              <span className="text-gray-600 text-xs">Canlı satış sayfasında görüntülenmek için video URL'si ekleyiniz</span>
+            </div>
+            <div className="flex space-x-1 py-4">
+              <div className="w-1/2 flex flex-col space-y-1">
+                <label className="flex items-center space-x-2">
+                  <input
+                    type="checkbox"
+                    checked={fData.offer}
+                    onChange={(e) =>
+                      setFdata({
+                        ...fData,
+                        error: false,
+                        success: false,
+                        offer: e.target.checked,
+                      })
+                    }
+                    className="w-4 h-4"
+                  />
+                  <span>İndirim Var mı? *</span>
+                </label>
+              </div>
+              {fData.offer && (
+                <div className="w-1/2 flex flex-col space-y-1">
+                  <label htmlFor="offerPrice">İndirimli Fiyat *</label>
+                  <input
+                    value={fData.offerPrice}
+                    onChange={(e) =>
+                      setFdata({
+                        ...fData,
+                        error: false,
+                        success: false,
+                        offerPrice: e.target.value,
+                      })
+                    }
+                    type="number"
+                    className="px-4 py-2 border focus:outline-none"
+                    id="offerPrice"
+                    min="0"
+                  />
+                </div>
+              )}
+            </div>
             <div className="flex flex-col space-y-1 w-full pb-4 md:pb-6 mt-4">
               <button
                 style={{ background: "#303031" }}
                 type="submit"
                 className="rounded-full bg-gray-800 text-gray-100 text-lg font-medium py-2"
               >
-                Create product
+                Ürün Oluştur
               </button>
             </div>
           </form>

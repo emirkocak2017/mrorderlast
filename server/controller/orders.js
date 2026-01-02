@@ -61,21 +61,30 @@ class Order {
         let save = await newOrder.save();
         if (save) {
           // Decrement product quantities (inventory update)
-          for (const productItem of allProduct) {
-            // Handle both 'quantity' and 'quantitiy' (typo) for backward compatibility
-            const qty = productItem.quantity || productItem.quantitiy || 0;
-            if (qty > 0) {
-              await productModel.findByIdAndUpdate(
-                productItem.id,
-                { $inc: { pQuantity: -qty } }
-              );
+          try {
+            for (const productItem of allProduct) {
+              // Handle both 'quantity' and 'quantitiy' (typo) for backward compatibility
+              const qty = productItem.quantity || productItem.quantitiy || 0;
+              if (qty > 0 && productItem.id) {
+                await productModel.findByIdAndUpdate(
+                  productItem.id,
+                  { $inc: { pQuantity: -qty, pSold: qty } }
+                );
+              }
             }
+            return res.json({ success: "Sipariş başarıyla oluşturuldu" });
+          } catch (inventoryError) {
+            console.error("Inventory update error:", inventoryError);
+            // Order is saved but inventory update failed - log but don't fail the order
+            return res.json({ 
+              success: "Sipariş oluşturuldu ancak stok güncellemesi sırasında bir sorun oluştu",
+              warning: true 
+            });
           }
-          return res.json({ success: "Sipariş başarıyla oluşturuldu" });
         }
       } catch (err) {
-        console.log(err);
-        return res.json({ error: "Sipariş oluşturulurken bir hata oluştu" });
+        console.error("Order creation error:", err);
+        return res.status(500).json({ error: "Sipariş oluşturulurken bir hata oluştu" });
       }
     }
   }

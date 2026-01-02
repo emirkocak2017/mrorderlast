@@ -19,7 +19,7 @@ const SearchFilter = (props) => {
           </svg>
         </span>
         <input
-          placeholder="Transaction id..."
+          placeholder="İşlem ID'si..."
           className="py-2 px-2 focus:outline-none rounded-r-full w-full"
           type="text"
         />

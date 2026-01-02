@@ -20,7 +20,8 @@ class brainTree {
 
   paymentProcess(req, res) {
     let { amountTotal, paymentMethod } = req.body;
-    // Simulated payment - always return success
+    
+    // Simulated payment - always return success for testing
     const mockTransactionId = `mock_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
     const mockResult = {
       success: true,
@@ -35,6 +36,7 @@ class brainTree {
     return res.json(mockResult);
     
     // Original Braintree code (commented out for simulation)
+    // Uncomment below and remove simulation code above to use real Braintree
     /*
     gateway.transaction.sale(
       {
@@ -46,15 +48,24 @@ class brainTree {
       },
       (err, result) => {
         if (err) {
-          console.error(err);
-          return res.json(err);
+          console.error("Braintree Error:", err);
+          return res.status(500).json({ 
+            success: false, 
+            error: "Ödeme işlemi sırasında bir hata oluştu",
+            details: err.message 
+          });
         }
 
         if (result.success) {
           console.log("Transaction ID: " + result.transaction.id);
           return res.json(result);
         } else {
-          console.error(result.message);
+          console.error("Transaction Failed:", result.message);
+          return res.status(400).json({ 
+            success: false, 
+            error: "Ödeme işlemi başarısız oldu",
+            message: result.message 
+          });
         }
       }
     );

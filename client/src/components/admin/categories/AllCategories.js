@@ -113,7 +113,7 @@ const AllCategory = (props) => {
           </tbody>
         </table>
         <div className="text-sm text-gray-600 mt-2">
-          Total {categories && categories.length} category found
+          Toplam {categories && categories.length} kategori bulundu
         </div>
       </div>
     </Fragment>

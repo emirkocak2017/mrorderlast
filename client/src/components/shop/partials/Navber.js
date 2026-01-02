@@ -37,19 +37,25 @@ const Navber = (props) => {
               className="hover:bg-gray-200 px-4 py-3 rounded-lg font-light tracking-widest hover:text-gray-800 cursor-pointer"
               onClick={(e) => history.push("/")}
             >
-              Shop
+              Mağaza
             </span>
             <span
               className="hover:bg-gray-200 px-4 py-3 rounded-lg font-light tracking-widest hover:text-gray-800 cursor-pointer"
-              onClick={(e) => history.push("/blog")}
+              onClick={(e) => history.push("/live-sales")}
             >
-              Blog
+              Canlı Satış
+            </span>
+            <span
+              className="hover:bg-gray-200 px-4 py-3 rounded-lg font-light tracking-widest hover:text-gray-800 cursor-pointer"
+              onClick={(e) => history.push("/deals")}
+            >
+              İndirimler
             </span>
             <span
               className="hover:bg-gray-200 px-4 py-3 rounded-lg font-light tracking-widest hover:text-gray-800 cursor-pointer"
               onClick={(e) => history.push("/contact-us")}
             >
-              Contact us
+              İletişim
             </span>
           </div>
           <div className="col-span-2 lg:hidden flex justify-items-stretch	 items-center">
@@ -371,19 +377,25 @@ const Navber = (props) => {
               className="font-medium text-lg tracking-widest hover:text-gray-800 hover:bg-gray-200 px-3 py-2 rounded-lg cursor-pointer"
               onClick={(e) => history.push("/")}
             >
-              Shop
+              Mağaza
             </span>
             <span
               className="font-medium text-lg tracking-widest hover:text-gray-800 hover:bg-gray-200 px-3 py-2 rounded-lg cursor-pointer"
-              onClick={(e) => history.push("/blog")}
+              onClick={(e) => history.push("/live-sales")}
             >
-              Blog
+              Canlı Satış
+            </span>
+            <span
+              className="font-medium text-lg tracking-widest hover:text-gray-800 hover:bg-gray-200 px-3 py-2 rounded-lg cursor-pointer"
+              onClick={(e) => history.push("/deals")}
+            >
+              İndirimler
             </span>
             <span
               className="font-medium text-lg tracking-widest hover:text-gray-800 hover:bg-gray-200 px-3 py-2 rounded-lg cursor-pointer"
               onClick={(e) => history.push("/contact-us")}
             >
-              Contact us
+              İletişim
             </span>
           </div>
         </div>

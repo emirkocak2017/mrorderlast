@@ -18,6 +18,8 @@ const upload = multer({ storage: storage });
 
 // Herkese açık rotalar (Ürünleri görmek gibi)
 router.get("/all-product", productController.getAllProduct);
+router.get("/live-sales", productController.getLiveSalesProducts);
+router.get("/deals", productController.getDealProducts);
 router.post("/product-by-category", productController.getProductByCategory);
 router.post("/product-by-price", productController.getProductByPrice);
 router.post("/wish-product", productController.getWishProduct);

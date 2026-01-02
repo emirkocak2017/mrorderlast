@@ -43,7 +43,7 @@ const AllCategory = (props) => {
             <tr>
               <th className="px-4 py-2 border">Products</th>
               <th className="px-4 py-2 border">Status</th>
-              <th className="px-4 py-2 border">Total</th>
+              <th className="px-4 py-2 border">Toplam</th>
               <th className="px-4 py-2 border">Transaction Id</th>
               <th className="px-4 py-2 border">Customer</th>
               <th className="px-4 py-2 border">Email</th>
@@ -80,7 +80,7 @@ const AllCategory = (props) => {
           </tbody>
         </table>
         <div className="text-sm text-gray-600 mt-2">
-          Total {orders && orders.length} order found
+          Toplam {orders && orders.length} sipariş bulundu
         </div>
       </div>
     </Fragment>

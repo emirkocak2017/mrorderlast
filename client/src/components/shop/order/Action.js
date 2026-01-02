@@ -41,9 +41,9 @@ export const pay = async (
 ) => {
   console.log(state);
   if (!state.address) {
-    setState({ ...state, error: "Please provide your address" });
+    setState({ ...state, error: "Lütfen adresinizi giriniz" });
   } else if (!state.phone) {
-    setState({ ...state, error: "Please provide your phone number" });
+    setState({ ...state, error: "Lütfen telefon numaranızı giriniz" });
   } else {
     let nonce;
     state.instance
@@ -57,7 +57,7 @@ export const pay = async (
         };
         getPaymentProcess(paymentData)
           .then(async (res) => {
-            if (res) {
+            if (res && res.success && res.transaction) {
               let orderData = {
                 allProduct: JSON.parse(localStorage.getItem("cart")),
                 user: JSON.parse(localStorage.getItem("jwt")).user._id,
@@ -73,19 +73,27 @@ export const pay = async (
                   dispatch({ type: "cartProduct", payload: null });
                   dispatch({ type: "cartTotalCost", payload: null });
                   dispatch({ type: "orderSuccess", payload: true });
-                  setState({ clientToken: "", instance: {} });
+                  setState({ clientToken: "", instance: {}, error: "" });
                   dispatch({ type: "loading", payload: false });
                   return history.push("/");
                 } else if (resposeData.error) {
-                  console.log(resposeData.error);
+                  setState({ ...state, error: resposeData.error || "Sipariş oluşturulamadı" });
+                  dispatch({ type: "loading", payload: false });
                 }
               } catch (error) {
-                console.log(error);
+                console.error("Order creation error:", error);
+                setState({ ...state, error: "Sipariş oluşturulurken bir hata oluştu" });
+                dispatch({ type: "loading", payload: false });
               }
+            } else {
+              setState({ ...state, error: res?.error || "Ödeme işlemi başarısız oldu" });
+              dispatch({ type: "loading", payload: false });
             }
           })
           .catch((err) => {
-            console.log(err);
+            console.error("Payment error:", err);
+            setState({ ...state, error: err.message || "Ödeme işlemi sırasında bir hata oluştu" });
+            dispatch({ type: "loading", payload: false });
           });
       })
       .catch((error) => {

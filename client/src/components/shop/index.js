@@ -10,6 +10,9 @@ import PageNotFound from "./layout/PageNotFound";
 import ProductDetails from "./productDetails";
 import ProductByCategory from "./home/ProductByCategory";
 import CheckoutPage from "./order/CheckoutPage";
+import LiveSales from "./home/LiveSales";
+import Deals from "./home/Deals";
+import ContactUs from "./home/ContactUs";
 
 export {
   Home,
@@ -26,4 +29,7 @@ export {
   ProductDetails,
   ProductByCategory,
   CheckoutPage,
+  LiveSales,
+  Deals,
+  ContactUs,
 };
