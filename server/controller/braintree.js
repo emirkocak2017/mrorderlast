@@ -20,6 +20,22 @@ class brainTree {
 
   paymentProcess(req, res) {
     let { amountTotal, paymentMethod } = req.body;
+    // Simulated payment - always return success
+    const mockTransactionId = `mock_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+    const mockResult = {
+      success: true,
+      transaction: {
+        id: mockTransactionId,
+        amount: amountTotal,
+        status: "settled",
+        type: "sale"
+      }
+    };
+    console.log("Simulated Payment Success - Transaction ID: " + mockTransactionId);
+    return res.json(mockResult);
+    
+    // Original Braintree code (commented out for simulation)
+    /*
     gateway.transaction.sale(
       {
         amount: amountTotal,
@@ -42,6 +58,7 @@ class brainTree {
         }
       }
     );
+    */
   }
 }
 

@@ -1,4 +1,5 @@
 const orderModel = require("../models/orders");
+const productModel = require("../models/products");
 
 class Order {
   async getAllOrders(req, res) {
@@ -19,7 +20,7 @@ class Order {
   async getOrderByUser(req, res) {
     let { uId } = req.body;
     if (!uId) {
-      return res.json({ message: "All filled must be required" });
+      return res.json({ message: "Tüm alanlar doldurulmalıdır" });
     } else {
       try {
         let Order = await orderModel
@@ -46,7 +47,7 @@ class Order {
       !address ||
       !phone
     ) {
-      return res.json({ message: "All filled must be required" });
+      return res.json({ message: "Tüm alanlar doldurulmalıdır" });
     } else {
       try {
         let newOrder = new orderModel({
@@ -59,10 +60,22 @@ class Order {
         });
         let save = await newOrder.save();
         if (save) {
-          return res.json({ success: "Order created successfully" });
+          // Decrement product quantities (inventory update)
+          for (const productItem of allProduct) {
+            // Handle both 'quantity' and 'quantitiy' (typo) for backward compatibility
+            const qty = productItem.quantity || productItem.quantitiy || 0;
+            if (qty > 0) {
+              await productModel.findByIdAndUpdate(
+                productItem.id,
+                { $inc: { pQuantity: -qty } }
+              );
+            }
+          }
+          return res.json({ success: "Sipariş başarıyla oluşturuldu" });
         }
       } catch (err) {
-        return res.json({ error: error });
+        console.log(err);
+        return res.json({ error: "Sipariş oluşturulurken bir hata oluştu" });
       }
     }
   }
@@ -70,7 +83,7 @@ class Order {
   async postUpdateOrder(req, res) {
     let { oId, status } = req.body;
     if (!oId || !status) {
-      return res.json({ message: "All filled must be required" });
+      return res.json({ message: "Tüm alanlar doldurulmalıdır" });
     } else {
       let currentOrder = orderModel.findByIdAndUpdate(oId, {
         status: status,
@@ -78,7 +91,7 @@ class Order {
       });
       currentOrder.exec((err, result) => {
         if (err) console.log(err);
-        return res.json({ success: "Order updated successfully" });
+          return res.json({ success: "Sipariş başarıyla güncellendi" });
       });
     }
   }
@@ -91,7 +104,7 @@ class Order {
       try {
         let deleteOrder = await orderModel.findByIdAndDelete(oId);
         if (deleteOrder) {
-          return res.json({ success: "Order deleted successfully" });
+          return res.json({ success: "Sipariş başarıyla silindi" });
         }
       } catch (error) {
         console.log(error);

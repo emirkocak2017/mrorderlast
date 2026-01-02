@@ -164,8 +164,16 @@ const Signup = (props) => {
               Remember me<span className="text-sm text-gray-600">*</span>
             </label>
           </div>
-          <a className="block text-gray-600" href="/">
-            Lost your password?
+          <a 
+            className="block text-gray-600 cursor-pointer hover:underline" 
+            onClick={(e) => {
+              e.preventDefault();
+              if (props.onForgotPassword) {
+                props.onForgotPassword();
+              }
+            }}
+          >
+            Şifremi unuttum?
           </a>
         </div>
         <div

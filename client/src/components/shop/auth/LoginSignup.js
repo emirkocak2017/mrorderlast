@@ -1,6 +1,7 @@
 import React, { Fragment, useState, useContext } from "react";
 import Login from "./Login";
 import Signup from "./Signup";
+import ForgotPassword from "./ForgotPassword";
 import { LayoutContext } from "../index";
 
 const LoginSignup = (props) => {
@@ -8,6 +9,7 @@ const LoginSignup = (props) => {
 
   const [login, setLogin] = useState(true);
   const [loginValue, setLoginValue] = useState("Create an account");
+  const [showForgotPassword, setShowForgotPassword] = useState(false);
 
   const loginSignupModalToggle = () =>
     data.loginSignupModal
@@ -40,23 +42,35 @@ const LoginSignup = (props) => {
         } fixed z-40 inset-0 my-8 md:my-20 flex items-start justify-center overflow-auto`}
       >
         <div className="w-11/12 md:w-3/5 lg:w-2/4 relative space-y-4 bg-white p-6 md:px-12 md:py-6">
-          {login ? <Login /> : <Signup />}
+          {showForgotPassword ? (
+            <ForgotPassword onClose={() => {
+              setShowForgotPassword(false);
+              loginSignupModalToggle();
+            }} />
+          ) : login ? (
+            <Login onForgotPassword={() => setShowForgotPassword(true)} />
+          ) : (
+            <Signup onForgotPassword={() => setShowForgotPassword(true)} />
+          )}
           <div className="flex items-center space-x-2">
             <span className="border-b border-gray-500 w-full" />
             <span className="font-medium">or</span>
             <span className="border-b border-gray-500 w-full" />
           </div>
-          <div
-            onClick={(e) => changeLoginSignup()}
-            style={{ color: "#303031", border: "1px solid #303031" }}
-            className="px-4 py-2 font-medium text-center cursor-pointer"
-          >
-            {loginValue}
-          </div>
+          {!showForgotPassword && (
+            <div
+              onClick={(e) => changeLoginSignup()}
+              style={{ color: "#303031", border: "1px solid #303031" }}
+              className="px-4 py-2 font-medium text-center cursor-pointer"
+            >
+              {loginValue}
+            </div>
+          )}
           {/*  Modal Close Button */}
           <div className="absolute top-0 right-0 mx-4">
             <svg
               onClick={(e) => {
+                setShowForgotPassword(false);
                 loginSignupModalToggle();
                 dispatch({ type: "loginSignupError", payload: false });
               }}

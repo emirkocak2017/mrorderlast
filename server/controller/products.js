@@ -56,19 +56,19 @@ class Product {
       !pStatus
     ) {
       Product.deleteImages(images, "file");
-      return res.json({ error: "All filled must be required" });
+      return res.json({ error: "Tüm alanlar doldurulmalıdır" });
     }
     // Validate Name and description
     else if (pName.length > 255 || pDescription.length > 3000) {
       Product.deleteImages(images, "file");
       return res.json({
-        error: "Name 255 & Description must not be 3000 charecter long",
+        error: "İsim 255 karakter, açıklama 3000 karakterden uzun olamaz",
       });
     }
     // Validate Images
     else if (images.length !== 2) {
       Product.deleteImages(images, "file");
-      return res.json({ error: "Must need to provide 2 images" });
+      return res.json({ error: "2 adet resim sağlanmalıdır" });
     } else {
       try {
         let allImages = [];
@@ -87,7 +87,7 @@ class Product {
         });
         let save = await newProduct.save();
         if (save) {
-          return res.json({ success: "Product created successfully" });
+          return res.json({ success: "Ürün başarıyla oluşturuldu" });
         }
       } catch (err) {
         console.log(err);
@@ -120,7 +120,7 @@ class Product {
       !pOffer |
       !pStatus
     ) {
-      return res.json({ error: "All filled must be required" });
+      return res.json({ error: "Tüm alanlar doldurulmalıdır" });
     }
     // Validate Name and description
     else if (pName.length > 255 || pDescription.length > 3000) {
@@ -131,7 +131,7 @@ class Product {
     // Validate Update Images
     else if (editImages && editImages.length == 1) {
       Product.deleteImages(editImages, "file");
-      return res.json({ error: "Must need to provide 2 images" });
+      return res.json({ error: "2 adet resim sağlanmalıdır" });
     } else {
       let editData = {
         pName,
@@ -154,7 +154,7 @@ class Product {
         let editProduct = productModel.findByIdAndUpdate(pId, editData);
         editProduct.exec((err) => {
           if (err) console.log(err);
-          return res.json({ success: "Product edit successfully" });
+          return res.json({ success: "Ürün başarıyla düzenlendi" });
         });
       } catch (err) {
         console.log(err);
@@ -165,7 +165,7 @@ class Product {
   async getDeleteProduct(req, res) {
     let { pId } = req.body;
     if (!pId) {
-      return res.json({ error: "All filled must be required" });
+      return res.json({ error: "Tüm alanlar doldurulmalıdır" });
     } else {
       try {
         let deleteProductObj = await productModel.findById(pId);
@@ -173,7 +173,7 @@ class Product {
         if (deleteProduct) {
           // Delete Image from uploads -> products folder
           Product.deleteImages(deleteProductObj.pImages, "string");
-          return res.json({ success: "Product deleted successfully" });
+          return res.json({ success: "Ürün başarıyla silindi" });
         }
       } catch (err) {
         console.log(err);
@@ -184,7 +184,7 @@ class Product {
   async getSingleProduct(req, res) {
     let { pId } = req.body;
     if (!pId) {
-      return res.json({ error: "All filled must be required" });
+      return res.json({ error: "Tüm alanlar doldurulmalıdır" });
     } else {
       try {
         let singleProduct = await productModel
@@ -203,7 +203,7 @@ class Product {
   async getProductByCategory(req, res) {
     let { catId } = req.body;
     if (!catId) {
-      return res.json({ error: "All filled must be required" });
+      return res.json({ error: "Tüm alanlar doldurulmalıdır" });
     } else {
       try {
         let products = await productModel
@@ -221,7 +221,7 @@ class Product {
   async getProductByPrice(req, res) {
     let { price } = req.body;
     if (!price) {
-      return res.json({ error: "All filled must be required" });
+      return res.json({ error: "Tüm alanlar doldurulmalıdır" });
     } else {
       try {
         let products = await productModel
@@ -240,7 +240,7 @@ class Product {
   async getWishProduct(req, res) {
     let { productArray } = req.body;
     if (!productArray) {
-      return res.json({ error: "All filled must be required" });
+      return res.json({ error: "Tüm alanlar doldurulmalıdır" });
     } else {
       try {
         let wishProducts = await productModel.find({
@@ -258,7 +258,7 @@ class Product {
   async getCartProduct(req, res) {
     let { productArray } = req.body;
     if (!productArray) {
-      return res.json({ error: "All filled must be required" });
+      return res.json({ error: "Tüm alanlar doldurulmalıdır" });
     } else {
       try {
         let cartProducts = await productModel.find({
@@ -276,7 +276,7 @@ class Product {
   async postAddReview(req, res) {
     let { pId, uId, rating, review } = req.body;
     if (!pId || !rating || !review || !uId) {
-      return res.json({ error: "All filled must be required" });
+      return res.json({ error: "Tüm alanlar doldurulmalıdır" });
     } else {
       let checkReviewRatingExists = await productModel.findOne({ _id: pId });
       if (checkReviewRatingExists.pRatingsReviews.length > 0) {

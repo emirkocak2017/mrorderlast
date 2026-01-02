@@ -31,15 +31,15 @@ class Auth {
     if (!name || !email || !password || !cPassword) {
       error = {
         ...error,
-        name: "Filed must not be empty",
-        email: "Filed must not be empty",
-        password: "Filed must not be empty",
-        cPassword: "Filed must not be empty",
+        name: "Alan boş bırakılamaz",
+        email: "Alan boş bırakılamaz",
+        password: "Alan boş bırakılamaz",
+        cPassword: "Alan boş bırakılamaz",
       };
       return res.json({ error });
     }
     if (name.length < 3 || name.length > 25) {
-      error = { ...error, name: "Name must be 3-25 charecter" };
+      error = { ...error, name: "İsim 3-25 karakter arasında olmalıdır" };
       return res.json({ error });
     } else {
       if (validateEmail(email)) {
@@ -47,7 +47,7 @@ class Auth {
         if ((password.length > 255) | (password.length < 8)) {
           error = {
             ...error,
-            password: "Password must be 8 charecter",
+            password: "Şifre en az 8 karakter olmalıdır",
             name: "",
             email: "",
           };
@@ -62,7 +62,7 @@ class Auth {
                 ...error,
                 password: "",
                 name: "",
-                email: "Email already exists",
+                email: "Bu e-posta adresi zaten kullanılıyor",
               };
               return res.json({ error });
             } else {
@@ -72,12 +72,13 @@ class Auth {
                 password,
                 // ========= Here role 1 for admin signup role 0 for customer signup =========
                 userRole: 0, // Field Name change to userRole from role
+                verified: true, // Auto-verify user for simulation
               });
               newUser
                 .save()
                 .then((data) => {
                   return res.json({
-                    success: "Account create successfully. Please login",
+                    success: "Hesabınız başarıyla oluşturuldu. Lütfen e-postanızı kontrol ediniz (simülasyon).",
                   });
                 })
                 .catch((err) => {
@@ -93,7 +94,7 @@ class Auth {
           ...error,
           password: "",
           name: "",
-          email: "Email is not valid",
+          email: "Geçerli bir e-posta adresi giriniz",
         };
         return res.json({ error });
       }
@@ -105,14 +106,14 @@ class Auth {
     let { email, password } = req.body;
     if (!email || !password) {
       return res.json({
-        error: "Fields must not be empty",
+        error: "Alanlar boş bırakılamaz",
       });
     }
     try {
       const data = await userModel.findOne({ email: email });
       if (!data) {
         return res.json({
-          error: "Invalid email or password",
+          error: "Geçersiz e-posta veya şifre",
         });
       } else {
         const login = await bcrypt.compare(password, data.password);
@@ -128,7 +129,7 @@ class Auth {
           });
         } else {
           return res.json({
-            error: "Invalid email or password",
+            error: "Geçersiz e-posta veya şifre",
           });
         }
       }
