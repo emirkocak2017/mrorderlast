@@ -22,8 +22,8 @@ const Signup = (props) => {
       return setData({
         ...data,
         error: {
-          cPassword: "Password doesn't match",
-          password: "Password doesn't match",
+          cPassword: "Şifreler eşleşmiyor",
+          password: "Şifreler eşleşmiyor",
         },
       });
     }
@@ -52,7 +52,7 @@ const Signup = (props) => {
           loading: false,
           error: false,
         })
-        enqueueSnackbar('Account Created Successfully..!', { variant: 'success' })
+        enqueueSnackbar('Hesap başarıyla oluşturuldu..!', { variant: 'success' })
       }
     } catch (error) {
       console.log(error);
@@ -61,12 +61,12 @@ const Signup = (props) => {
 
   return (
     <Fragment>
-      <div className="text-center text-2xl mb-6">Register</div>
+      <div className="text-center text-2xl mb-6">Kayıt Ol</div>
       <form className="space-y-4">
         {data.success ? alert(data.success, "green") : ""}
         <div className="flex flex-col">
           <label htmlFor="name">
-            Name<span className="text-sm text-gray-600 ml-1">*</span>
+            İsim<span className="text-sm text-gray-600 ml-1">*</span>
           </label>
           <input
             onChange={(e) =>
@@ -88,7 +88,7 @@ const Signup = (props) => {
         </div>
         <div className="flex flex-col">
           <label htmlFor="email">
-            Email address<span className="text-sm text-gray-600 ml-1">*</span>
+            E-posta adresi<span className="text-sm text-gray-600 ml-1">*</span>
           </label>
           <input
             onChange={(e) =>
@@ -110,7 +110,7 @@ const Signup = (props) => {
         </div>
         <div className="flex flex-col">
           <label htmlFor="password">
-            Password<span className="text-sm text-gray-600 ml-1">*</span>
+            Şifre<span className="text-sm text-gray-600 ml-1">*</span>
           </label>
           <input
             onChange={(e) =>
@@ -132,7 +132,7 @@ const Signup = (props) => {
         </div>
         <div className="flex flex-col">
           <label htmlFor="cPassword">
-            Confirm password
+            Şifreyi onayla
             <span className="text-sm text-gray-600 ml-1">*</span>
           </label>
           <input
@@ -161,7 +161,7 @@ const Signup = (props) => {
               className="px-4 py-2 focus:outline-none border mr-1"
             />
             <label htmlFor="rememberMe">
-              Remember me<span className="text-sm text-gray-600">*</span>
+              Beni hatırla<span className="text-sm text-gray-600">*</span>
             </label>
           </div>
           <a 
@@ -181,7 +181,7 @@ const Signup = (props) => {
           style={{ background: "#303031" }}
           className="px-4 py-2 text-white text-center cursor-pointer font-medium"
         >
-          Create an account
+          Hesap oluştur
         </div>
       </form>
     </Fragment>

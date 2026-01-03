@@ -35,7 +35,7 @@ const Login = (props) => {
       } else if (responseData.token) {
         setData({ email: "", password: "", loading: false, error: false });
         localStorage.setItem("jwt", JSON.stringify(responseData));
-       enqueueSnackbar('Login Completed Successfully..!', { variant: 'success' })
+       enqueueSnackbar('Giriş başarıyla tamamlandı..!', { variant: 'success' })
         window.location.href = "/";
 
       }    
@@ -46,10 +46,10 @@ const Login = (props) => {
 
   return (
     <Fragment>
-      <div className="text-center text-2xl mb-6">Login</div>
+      <div className="text-center text-2xl mb-6">Giriş Yap</div>
       {layoutData.loginSignupError ? (
         <div className="bg-red-200 py-2 px-4 rounded">
-          You need to login for checkout. Haven't accont? Create new one.
+          Ödeme için giriş yapmanız gerekiyor. Hesabınız yok mu? Yeni hesap oluşturun.
         </div>
       ) : (
         ""
@@ -57,7 +57,7 @@ const Login = (props) => {
       <form className="space-y-4">
         <div className="flex flex-col">
           <label htmlFor="name">
-            Username or email address
+            Kullanıcı adı veya e-posta adresi
             <span className="text-sm text-gray-600 ml-1">*</span>
           </label>
           <input
@@ -76,7 +76,7 @@ const Login = (props) => {
         </div>
         <div className="flex flex-col">
           <label htmlFor="password">
-            Password<span className="text-sm text-gray-600 ml-1">*</span>
+            Şifre<span className="text-sm text-gray-600 ml-1">*</span>
           </label>
           <input
             onChange={(e) => {
@@ -100,7 +100,7 @@ const Login = (props) => {
               className="px-4 py-2 focus:outline-none border mr-1"
             />
             <label htmlFor="rememberMe">
-              Remember me<span className="text-sm text-gray-600">*</span>
+              Beni hatırla<span className="text-sm text-gray-600">*</span>
             </label>
           </div>
           <a 
@@ -120,7 +120,7 @@ const Login = (props) => {
           style={{ background: "#303031" }}
           className="font-medium px-4 py-2 text-white text-center cursor-pointer"
         >
-          Login
+          Giriş Yap
         </div>
       </form>
     </Fragment>
