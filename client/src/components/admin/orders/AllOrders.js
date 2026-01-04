@@ -97,10 +97,10 @@ const CategoryTable = ({ order, editOrder }) => {
         <td className="w-48 hover:bg-gray-200 p-2 flex flex-col space-y-1">
           {order.allProduct.map((product, i) => {
             // --- GÜNCELLEME: Ürün Silinmişse Kontrolü ---
-            if (!product.id) {
+            if (!product.id || product.id === null) {
               return (
                 <span className="block flex items-center space-x-2" key={i}>
-                  <span className="text-red-500 font-bold text-xs">Silinmiş Ürün</span>
+                  <span className="text-red-500 font-bold text-xs">Deleted Product</span>
                   <span>{product.quantitiy}x</span>
                 </span>
               );
