@@ -60,10 +60,10 @@ class Order {
         });
         let save = await newOrder.save();
         if (save) {
-          // Decrement product quantities (inventory update)
+          // urun miktarlarini azalt (stok guncellemesi)
           try {
             for (const productItem of allProduct) {
-              // Handle both 'quantity' and 'quantitiy' (typo) for backward compatibility
+              // geriye donuk uyumluluk icin hem quantity hem quantitiy'yi kontrol et (typo var)
               const qty = productItem.quantity || productItem.quantitiy || 0;
               if (qty > 0 && productItem.id) {
                 await productModel.findByIdAndUpdate(
@@ -75,7 +75,7 @@ class Order {
             return res.json({ success: "Sipariş başarıyla oluşturuldu" });
           } catch (inventoryError) {
             console.error("Inventory update error:", inventoryError);
-            // Order is saved but inventory update failed - log but don't fail the order
+            // siparis kaydedildi ama stok guncellemesi basarisiz - logla ama siparisi iptal etme
             return res.json({ 
               success: "Sipariş oluşturuldu ancak stok güncellemesi sırasında bir sorun oluştu",
               warning: true 

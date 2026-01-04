@@ -3,7 +3,7 @@ const fs = require("fs");
 const path = require("path");
 
 class Product {
-  // Delete Image from uploads -> products folder
+  // uploads -> products klasorunden resimleri sil
   static deleteImages(images, mode) {
     var basePath =
       path.resolve(__dirname + "../../") + "/public/uploads/products/";
@@ -58,7 +58,7 @@ class Product {
     let { pName, pDescription, pPrice, pQuantity, pCategory, pOffer, pStatus, videoUrl, offer, offerPrice } =
       req.body;
     let images = req.files;
-    // Validation
+    // validasyon kontrolu
     if (
       !pName |
       !pDescription |
@@ -71,14 +71,14 @@ class Product {
       Product.deleteImages(images, "file");
       return res.json({ error: "Tüm alanlar doldurulmalıdır" });
     }
-    // Validate Name and description
+    // isim ve aciklama validasyonu
     else if (pName.length > 255 || pDescription.length > 3000) {
       Product.deleteImages(images, "file");
       return res.json({
         error: "İsim 255 karakter, açıklama 3000 karakterden uzun olamaz",
       });
     }
-    // Validate Images
+    // resim validasyonu
     else if (images.length !== 2) {
       Product.deleteImages(images, "file");
       return res.json({ error: "2 adet resim sağlanmalıdır" });
@@ -128,7 +128,7 @@ class Product {
     } = req.body;
     let editImages = req.files;
 
-    // Validate other fileds
+    // diger alanlarin validasyonu
     if (
       !pId |
       !pName |
@@ -141,13 +141,13 @@ class Product {
     ) {
       return res.json({ error: "Tüm alanlar doldurulmalıdır" });
     }
-    // Validate Name and description
+    // isim ve aciklama validasyonu
     else if (pName.length > 255 || pDescription.length > 3000) {
       return res.json({
         error: "Name 255 & Description must not be 3000 charecter long",
       });
     }
-    // Validate Update Images
+    // guncelleme resimlerinin validasyonu
     else if (editImages && editImages.length == 1) {
       Product.deleteImages(editImages, "file");
       return res.json({ error: "2 adet resim sağlanmalıdır" });
@@ -193,7 +193,7 @@ class Product {
         let deleteProductObj = await productModel.findById(pId);
         let deleteProduct = await productModel.findByIdAndDelete(pId);
         if (deleteProduct) {
-          // Delete Image from uploads -> products folder
+          // uploads -> products klasorunden resim sil
           Product.deleteImages(deleteProductObj.pImages, "string");
           return res.json({ success: "Ürün başarıyla silindi" });
         }

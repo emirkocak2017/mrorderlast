@@ -21,7 +21,7 @@ class brainTree {
   paymentProcess(req, res) {
     let { amountTotal, paymentMethod } = req.body;
     
-    // Simulated payment - always return success for testing
+    // simule edilmis odeme - test icin her zaman basarili don
     const mockTransactionId = `mock_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
     const mockResult = {
       success: true,
@@ -35,8 +35,8 @@ class brainTree {
     console.log("Simulated Payment Success - Transaction ID: " + mockTransactionId);
     return res.json(mockResult);
     
-    // Original Braintree code (commented out for simulation)
-    // Uncomment below and remove simulation code above to use real Braintree
+    // orijinal braintree kodu (simulasyon icin yorum satirina alindi)
+    // gercek braintree kullanmak icin asagidaki yorumu kaldir ve yukaridaki simulasyon kodunu sil
     /*
     gateway.transaction.sale(
       {

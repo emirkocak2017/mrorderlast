@@ -13,7 +13,7 @@ exports.loginCheck = (req, res, next) => {
     token = token.replace("Bearer ", "");
     const decode = jwt.verify(token, JWT_SECRET);
     req.userDetails = decode;
-    // Add loggedInUserId to req.body for isAdmin middleware
+    // isAdmin middleware'i icin loggedInUserId'yi req.body'ye ekle
     req.body.loggedInUserId = decode._id;
     next();
   } catch (err) {
@@ -38,7 +38,7 @@ exports.isAuth = (req, res, next) => {
 exports.isAdmin = async (req, res, next) => {
   try {
     let reqUser = await userModel.findById(req.body.loggedInUserId);
-    // If user role 0 that's mean not admin it's customer
+    // eger kullanici role 0 ise admin degil musteri demektir
     if (!reqUser || reqUser.userRole === 0) {
       return res.status(403).json({ error: "Erişim reddedildi" });
     }

@@ -24,7 +24,7 @@ class Auth {
     }
   }
 
-  /* User Registration/Signup controller  */
+  /* kullanici kayit/signup controller'i  */
   async postSignup(req, res) {
     let { name, email, password, cPassword } = req.body;
     let error = {};
@@ -53,7 +53,7 @@ class Auth {
           };
           return res.json({ error });
         } else {
-          // If Email & Number exists in Database then:
+          // eger email veritabaninda varsa:
           try {
             password = bcrypt.hashSync(password, 10);
             const data = await userModel.findOne({ email: email });
@@ -70,7 +70,7 @@ class Auth {
                 name,
                 email,
                 password,
-                // ========= Here role 1 for admin signup role 0 for customer signup =========
+                // ========= burada role 1 admin icin, role 0 musteri icin =========
                 userRole: 0, // Field Name change to userRole from role
                 verified: true, // Auto-verify user for simulation
               });
@@ -101,7 +101,7 @@ class Auth {
     }
   }
 
-  /* User Login/Signin controller  */
+  /* kullanici giris/signin controller'i  */
   async postSignin(req, res) {
     let { email, password } = req.body;
     if (!email || !password) {

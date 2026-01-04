@@ -1,4 +1,4 @@
-/* This all of are helper function */
+/* bunlarin hepsi yardimci fonksiyonlar */
 const userModel = require("../models/users");
 
 exports.toTitleCase = function (str) {
