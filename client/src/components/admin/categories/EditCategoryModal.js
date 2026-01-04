@@ -45,16 +45,16 @@ const EditCategoryModal = (props) => {
 
   return (
     <Fragment>
-      {/* Black Overlay */}
+      {/* siyah overlay */}
       <div
         onClick={(e) => dispatch({ type: "editCategoryModalClose" })}
         className={`${
           data.editCategoryModal.modal ? "" : "hidden"
         } fixed top-0 left-0 z-30 w-full h-full bg-black opacity-50`}
       />
-      {/* End Black Overlay */}
+      {/* siyah overlay sonu */}
 
-      {/* Modal Start */}
+      {/* modal baslangic */}
       <div
         className={`${
           data.editCategoryModal.modal ? "" : "hidden"
@@ -65,7 +65,7 @@ const EditCategoryModal = (props) => {
             <span className="text-left font-semibold text-2xl tracking-wider">
               Kategori Düzenle
             </span>
-            {/* Close Modal */}
+            {/* modal kapat */}
             <span
               style={{ background: "#303031" }}
               onClick={(e) => dispatch({ type: "editCategoryModalClose" })}

@@ -75,10 +75,10 @@ export const addToCart = (
   let cart = localStorage.getItem("cart")
     ? JSON.parse(localStorage.getItem("cart"))
     : [];
-  // Güvenli Erişim: cart null/undefined ise kontrol et
+  // guvenli erisim: cart null/undefined ise kontrol et
   if (cart && Array.isArray(cart) && cart.length > 0) {
     cart.forEach((item) => {
-      // Eğer item veya item.id null ise, atla (silinmiş ürün)
+      // eger item veya item.id null ise, atla (silinmis urun)
       if (item && item.id === id) {
         isObj = true;
       }

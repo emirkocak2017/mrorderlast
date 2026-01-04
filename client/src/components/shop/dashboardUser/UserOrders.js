@@ -10,14 +10,15 @@ const TableHeader = () => {
     <Fragment>
       <thead>
         <tr>
-          <th className="px-4 py-2 border">Products</th>
-          <th className="px-4 py-2 border">Status</th>
-          <th className="px-4 py-2 border">Total</th>
-          <th className="px-4 py-2 border">Phone</th>
-          <th className="px-4 py-2 border">Address</th>
-          <th className="px-4 py-2 border">Transaction Id</th>
-          <th className="px-4 py-2 border">Checkout</th>
-          <th className="px-4 py-2 border">Processing</th>
+          <th className="px-4 py-2 border">Ürünler</th>
+          <th className="px-4 py-2 border">Durum</th>
+          <th className="px-4 py-2 border">Toplam</th>
+          <th className="px-4 py-2 border">Telefon</th>
+          <th className="px-4 py-2 border">Adres</th>
+          <th className="px-4 py-2 border">İşlem ID</th>
+          <th className="px-4 py-2 border">Oluşturulma</th>
+          <th className="px-4 py-2 border">Güncelleme</th>
+          <th className="px-4 py-2 border">İşlemler</th>
         </tr>
       </thead>
     </Fragment>
@@ -30,13 +31,13 @@ const TableBody = ({ order }) => {
       <tr className="border-b">
         <td className="w-48 hover:bg-gray-200 p-2 flex flex-col space-y-1">
           {order.allProduct?.map((product, i) => {
-            // Güvenli Erişim: ?. operatörü (Optional Chaining)
+            // guvenli erisim: ?. operatoru (optional chaining)
             
-            // Eğer product kendisi null/undefined ise, atla
+            // eger product kendisi null/undefined ise, atla
             if (!product) {
               return (
                 <span className="block flex items-center space-x-2" key={i}>
-                  <span className="text-red-500">Deleted Product</span>
+                  <span className="text-red-500">Silinmiş Ürün</span>
                   <span className="text-xs font-semibold">(0x)</span>
                 </span>
               );
@@ -46,11 +47,11 @@ const TableBody = ({ order }) => {
             const pImages = productId?.pImages;
             const pName = productId?.pName;
             
-            // Eğer product.id null ise, silinmiş ürün olarak göster
+            // eger product.id null ise, silinmis urun olarak goster
             if (!productId || productId === null) {
               return (
                 <span className="block flex items-center space-x-2" key={i}>
-                  <span className="text-red-500">Deleted Product</span>
+                  <span className="text-red-500">Silinmiş Ürün</span>
                   <span className="text-xs font-semibold">({product?.quantitiy || 0}x)</span>
                 </span>
               );
@@ -58,7 +59,7 @@ const TableBody = ({ order }) => {
             
             return (
               <span className="block flex items-center space-x-2" key={i}>
-                {/* Resim Kontrolü */}
+                {/* resim kontrolu */}
                 {pImages && Array.isArray(pImages) && pImages.length > 0 && pImages[0] ? (
                   <img
                     className="w-8 h-8 object-cover object-center"
@@ -66,15 +67,15 @@ const TableBody = ({ order }) => {
                     alt="productImage"
                   />
                 ) : (
-                  <span className="text-red-500">Deleted Product</span>
+                  <span className="text-red-500">Silinmiş Ürün</span>
                 )}
                 
-                {/* İsim Kontrolü */}
+                {/* isim kontrolu */}
                 <span className="text-sm">
-                  {pName || <span className="text-red-500">Deleted Product</span>}
+                  {pName || <span className="text-red-500">Silinmiş Ürün</span>}
                 </span>
                 
-                {/* Miktar */}
+                {/* miktar */}
                 <span className="text-xs font-semibold">({product?.quantitiy || 0}x)</span>
               </span>
             );
@@ -83,27 +84,27 @@ const TableBody = ({ order }) => {
         <td className="hover:bg-gray-200 p-2 text-center cursor-default">
           {order.status === "Not processed" && (
             <span className="block text-red-600 rounded-full text-center text-xs px-2 font-semibold">
-              {order.status}
+              Bekliyor
             </span>
           )}
           {order.status === "Processing" && (
             <span className="block text-yellow-600 rounded-full text-center text-xs px-2 font-semibold">
-              {order.status}
+              İşleniyor
             </span>
           )}
           {order.status === "Shipped" && (
             <span className="block text-blue-600 rounded-full text-center text-xs px-2 font-semibold">
-              {order.status}
+              Kargoda
             </span>
           )}
           {order.status === "Delivered" && (
             <span className="block text-green-600 rounded-full text-center text-xs px-2 font-semibold">
-              {order.status}
+              Teslim Edildi
             </span>
           )}
           {order.status === "Cancelled" && (
             <span className="block text-red-600 rounded-full text-center text-xs px-2 font-semibold">
-              {order.status}
+              İptal Edildi
             </span>
           )}
         </td>
@@ -120,6 +121,16 @@ const TableBody = ({ order }) => {
         </td>
         <td className="hover:bg-gray-200 p-2 text-center">
           {moment(order.updatedAt).format("lll")}
+        </td>
+        <td className="hover:bg-gray-200 p-2 text-center">
+          <button
+            onClick={() => {
+              alert("Talebiniz alınmıştır, inceleniyor.");
+            }}
+            className="px-3 py-1 bg-orange-500 text-white text-xs rounded hover:bg-orange-600"
+          >
+            İade/İptal Talep Et
+          </button>
         </td>
       </tr>
     </Fragment>

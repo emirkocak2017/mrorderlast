@@ -59,7 +59,7 @@ const Deals = () => {
 
   return (
     <Layout>
-      {/* İNDİRİM Banner */}
+      {/* indirim banner'i */}
       <div className="relative bg-gradient-to-r from-red-600 to-pink-600 text-white py-8 mb-8 overflow-hidden">
         <div className="absolute inset-0 opacity-20">
           <div className="absolute top-0 left-0 w-64 h-64 bg-white rounded-full -translate-x-1/2 -translate-y-1/2"></div>
@@ -69,7 +69,7 @@ const Deals = () => {
           <h1 className="text-5xl font-bold mb-2">İNDİRİM</h1>
           <p className="text-xl">Özel fırsatları kaçırmayın!</p>
         </div>
-        {/* Decorative Ribbons */}
+        {/* dekoratif kurdeleler */}
         <div className="absolute top-0 left-0 w-0 h-0 border-l-[50px] border-l-transparent border-t-[50px] border-t-red-800"></div>
         <div className="absolute top-0 right-0 w-0 h-0 border-r-[50px] border-r-transparent border-t-[50px] border-t-red-800"></div>
       </div>
@@ -86,12 +86,12 @@ const Deals = () => {
                 key={product._id}
                 className="relative bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow group"
               >
-                {/* İNDİRİM Badge */}
+                {/* indirim rozeti */}
                 <div className="absolute top-4 right-4 z-10 bg-red-600 text-white px-4 py-2 rounded-full font-bold text-sm transform rotate-12 shadow-lg">
                   İNDİRİM
                 </div>
                 
-                {/* Product Image */}
+                {/* urun resmi */}
                 <div
                   className="relative h-64 overflow-hidden cursor-pointer"
                   onClick={() => history.push(`/products/${product._id}`)}
@@ -104,7 +104,7 @@ const Deals = () => {
                   <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors"></div>
                 </div>
 
-                {/* Product Info */}
+                {/* urun bilgisi */}
                 <div className="p-4">
                   <h3
                     className="text-lg font-semibold mb-2 cursor-pointer hover:text-red-600 transition-colors line-clamp-2"
@@ -113,7 +113,7 @@ const Deals = () => {
                     {product.pName}
                   </h3>
                   
-                  {/* Price Section */}
+                  {/* fiyat bolumu */}
                   <div className="flex items-center space-x-2 mb-4">
                     {product.offerPrice > 0 ? (
                       <>
@@ -134,7 +134,7 @@ const Deals = () => {
                     )}
                   </div>
 
-                  {/* Stock Status */}
+                  {/* stok durumu */}
                   <div className="mb-4">
                     {product.pQuantity > 0 ? (
                       <span className="text-green-600 text-sm font-medium">✓ Stokta Var</span>
@@ -143,7 +143,7 @@ const Deals = () => {
                     )}
                   </div>
 
-                  {/* Add to Cart Button */}
+                  {/* sepete ekle butonu */}
                   <button
                     onClick={() => handleAddToCart(product)}
                     disabled={product.pQuantity === 0}
@@ -157,7 +157,7 @@ const Deals = () => {
                   </button>
                 </div>
 
-                {/* Corner Ribbon */}
+                {/* kose kurdelasi */}
                 <div className="absolute top-0 left-0 w-24 h-24 overflow-hidden">
                   <div className="absolute top-0 left-0 w-32 h-8 bg-red-600 transform -rotate-45 -translate-x-8 translate-y-4 shadow-lg">
                     <span className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-white text-xs font-bold">

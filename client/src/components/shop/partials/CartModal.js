@@ -55,13 +55,13 @@ const CartModal = () => {
 
   return (
     <Fragment>
-      {/* Black Overlay */}
+      {/* siyah overlay */}
       <div
         className={`${
           !data.cartModal ? "hidden" : ""
         } fixed top-0 z-30 w-full h-full bg-black opacity-50`}
       />
-      {/* Cart Modal Start */}
+      {/* sepet modal baslangic */}
       <section
         className={`${
           !data.cartModal ? "hidden" : ""
@@ -74,7 +74,7 @@ const CartModal = () => {
           <div className="overflow-y-auto">
             <div className="border-b border-gray-700 flex justify-between">
               <div className="p-4 text-white text-lg font-semibold">Sepet</div>
-              {/* Cart Modal Close Button */}
+              {/* sepet modal kapat butonu */}
               <div className="p-4 text-white">
                 <svg
                   onClick={(e) => cartModalOpen()}
@@ -97,7 +97,7 @@ const CartModal = () => {
                 products.map((item, index) => {
                   return (
                     <Fragment key={index}>
-                      {/* Cart Product Start */}
+                      {/* sepet urunu baslangic */}
                       <div className="text-white flex space-x-2 my-4 items-center">
                         <img
                           className="w-16 h-16 object-cover object-center"
@@ -124,9 +124,9 @@ const CartModal = () => {
                               </span>{" "}
                               {subTotal(item._id, item.pPrice)}₺
                             </div>{" "}
-                            {/* SUbtotal Count */}
+                            {/* ara toplam sayisi */}
                           </div>
-                          {/* Cart Product Remove Button */}
+                          {/* sepet urunu sil butonu */}
                           <div
                             onClick={(e) => removeCartProduct(item._id)}
                             className="absolute top-0 right-0 text-white"
@@ -146,7 +146,7 @@ const CartModal = () => {
                           </div>
                         </div>
                       </div>
-                      {/* Cart Product Start */}
+                      {/* sepet urunu baslangic */}
                     </Fragment>
                   );
                 })}
@@ -199,13 +199,13 @@ const CartModal = () => {
               </Fragment>
             ) : (
               <div className="px-4 py-2 bg-black text-white text-center cursor-not-allowed">
-                Checkout
+                Ödeme
               </div>
             )}
           </div>
         </div>
       </section>
-      {/* Cart Modal End */}
+      {/* sepet modal sonu */}
     </Fragment>
   );
 };

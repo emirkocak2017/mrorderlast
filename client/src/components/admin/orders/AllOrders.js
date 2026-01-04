@@ -88,7 +88,7 @@ const AllOrders = (props) => {
   );
 };
 
-/* Tekil Sipariş Satırı Bileşeni */
+/* tekil siparis satiri component'i */
 const OrderTable = ({ order, editOrder }) => {
   const { dispatch } = useContext(OrderContext);
 
@@ -96,16 +96,16 @@ const OrderTable = ({ order, editOrder }) => {
     <Fragment>
       <tr className="border-b">
         <td className="w-48 hover:bg-gray-200 p-2 flex flex-col space-y-1">
-          {/* HATA ÇÖZÜLEN KISIM BAŞLANGICI */}
+          {/* hata cozulen kısım baslangic */}
           {order.allProduct?.map((product, i) => {
-            // Güvenli Erişim: ?. operatörü (Optional Chaining)
-            // product?.id?.pImages yazınca product veya id null ise kod patlamaz, undefined döner.
+            // guvenli erisim: ?. operatoru (optional chaining)
+            // product?.id?.pImages yazinca product veya id null ise kod patlamaz, undefined doner.
             
-            // Eğer product kendisi null/undefined ise, atla
+            // eger product kendisi null/undefined ise, atla
             if (!product) {
               return (
                 <span className="block flex items-center space-x-2" key={i}>
-                  <span className="text-red-500">Deleted Product</span>
+                  <span className="text-red-500">Silinmiş Ürün</span>
                   <span className="text-xs font-semibold">(0x)</span>
                 </span>
               );
@@ -115,11 +115,11 @@ const OrderTable = ({ order, editOrder }) => {
             const pImages = productId?.pImages;
             const pName = productId?.pName;
             
-            // Eğer product.id null ise, silinmiş ürün olarak göster
+            // eger product.id null ise, silinmis urun olarak goster
             if (!productId || productId === null) {
               return (
                 <span className="block flex items-center space-x-2" key={i}>
-                  <span className="text-red-500">Deleted Product</span>
+                  <span className="text-red-500">Silinmiş Ürün</span>
                   <span className="text-xs font-semibold">({product?.quantitiy || 0}x)</span>
                 </span>
               );
@@ -127,7 +127,7 @@ const OrderTable = ({ order, editOrder }) => {
             
             return (
               <span className="block flex items-center space-x-2" key={i}>
-                {/* Resim Kontrolü */}
+                {/* resim kontrolu */}
                 {pImages && Array.isArray(pImages) && pImages.length > 0 && pImages[0] ? (
                   <img
                     className="w-8 h-8 object-cover object-center"
@@ -135,46 +135,46 @@ const OrderTable = ({ order, editOrder }) => {
                     alt="productImage"
                   />
                 ) : (
-                  <span className="text-red-500">Deleted Product</span>
+                  <span className="text-red-500">Silinmiş Ürün</span>
                 )}
                 
-                {/* İsim Kontrolü */}
+                {/* isim kontrolu */}
                 <span className="text-sm">
                   {pName || <span className="text-red-500">Deleted Product</span>}
                 </span>
                 
-                {/* Miktar */}
+                {/* miktar */}
                 <span className="text-xs font-semibold">({product?.quantitiy || 0}x)</span>
               </span>
             );
           })}
-          {/* HATA ÇÖZÜLEN KISIM BİTİŞİ */}
+          {/* hata cozulen kısım bitis */}
         </td>
 
         <td className="hover:bg-gray-200 p-2 text-center cursor-default">
           {order.status === "Not processed" && (
             <span className="block text-red-600 rounded-full text-center text-xs px-2 font-semibold">
-              {order.status}
+              Bekliyor
             </span>
           )}
           {order.status === "Processing" && (
             <span className="block text-yellow-600 rounded-full text-center text-xs px-2 font-semibold">
-              {order.status}
+              İşleniyor
             </span>
           )}
           {order.status === "Shipped" && (
             <span className="block text-blue-600 rounded-full text-center text-xs px-2 font-semibold">
-              {order.status}
+              Kargoda
             </span>
           )}
           {order.status === "Delivered" && (
             <span className="block text-green-600 rounded-full text-center text-xs px-2 font-semibold">
-              {order.status}
+              Teslim Edildi
             </span>
           )}
           {order.status === "Cancelled" && (
             <span className="block text-red-600 rounded-full text-center text-xs px-2 font-semibold">
-              {order.status}
+              İptal Edildi
             </span>
           )}
         </td>
@@ -184,7 +184,7 @@ const OrderTable = ({ order, editOrder }) => {
         <td className="hover:bg-gray-200 p-2 text-center">
           {order.transactionId}
         </td>
-        {/* Kullanıcı Kontrolü */}
+        {/* kullanici kontrolu */}
         <td className="hover:bg-gray-200 p-2 text-center">
             {order.user?.name || <span className="text-red-400">Silinmiş Kullanıcı</span>}
         </td>

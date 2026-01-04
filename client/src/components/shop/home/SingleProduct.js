@@ -11,7 +11,7 @@ const SingleProduct = (props) => {
   const { products } = data;
   const history = useHistory();
 
-  /* WhisList State */
+  /* wishlist state'i */
   const [wList, setWlist] = useState(
     JSON.parse(localStorage.getItem("wishList"))
   );
@@ -60,13 +60,38 @@ const SingleProduct = (props) => {
     <Fragment>
       {products && products.length > 0 ? (
         products.map((item, index) => {
+          // urun rozetleri icin hesaplamalar
+          const createdAt = item?.createdAt ? new Date(item.createdAt) : null;
+          const daysSinceCreation = createdAt 
+            ? Math.floor((new Date() - createdAt) / (1000 * 60 * 60 * 24))
+            : 999;
+          const isNew = daysSinceCreation < 7;
+          const hasOffer = item?.offer === true || item?.pOffer;
+          const offerPercent = item?.pOffer || "0";
+          
           return (
             <Fragment key={index}>
               <div className="relative col-span-1 m-2">
+                {/* urun rozetleri */}
+                <div className="absolute top-2 left-2 z-10 flex flex-col space-y-1">
+                  {isNew && (
+                    <span className="bg-green-500 text-white text-xs font-bold px-2 py-1 rounded">
+                      YENİ
+                    </span>
+                  )}
+                  {hasOffer && (
+                    <span className="bg-red-500 text-white text-xs font-bold px-2 py-1 rounded">
+                      %{offerPercent} İNDİRİM
+                    </span>
+                  )}
+                  <span className="bg-blue-500 text-white text-xs font-bold px-2 py-1 rounded">
+                    KARGO BEDAVA
+                  </span>
+                </div>
                 <img
                   onClick={(e) => history.push(`/products/${item._id}`)}
                   className="w-full object-cover object-center cursor-pointer"
-                  src={`${apiURL}/uploads/products/${item.pImages[0]}`}
+                  src={`${apiURL}/uploads/products/${item?.pImages?.[0] || ''}`}
                   alt=""
                 />
                 <div className="flex items-center justify-between mt-2">
@@ -91,12 +116,34 @@ const SingleProduct = (props) => {
                       </svg>
                     </span>
                     <span className="text-gray-700">
-                      {item.pRatingsReviews.length}
+                      {item?.pRatingsReviews?.length || 0}
                     </span>
                   </div>
                 </div>
                 <div>{item.pPrice}₺</div>
-                {/* WhisList Logic  */}
+                {/* stok uyarisi */}
+                {item?.pQuantity !== undefined && (
+                  <div className="mt-2">
+                    {item.pQuantity < 5 ? (
+                      <div>
+                        <div className="text-red-600 text-xs font-semibold mb-1">
+                          Son {item.pQuantity} Ürün!
+                        </div>
+                        <div className="w-full bg-gray-200 rounded-full h-1.5">
+                          <div 
+                            className="bg-red-500 h-1.5 rounded-full" 
+                            style={{ width: '20%' }}
+                          ></div>
+                        </div>
+                      </div>
+                    ) : (
+                      <div className="text-green-600 text-xs font-semibold">
+                        Stokta Var
+                      </div>
+                    )}
+                  </div>
+                )}
+                {/* wishlist mantigi  */}
                 <div className="absolute top-0 right-0 mx-2 my-2 md:mx-4">
                   <svg
                     onClick={(e) => isWishReq(e, item._id, setWlist)}
@@ -131,7 +178,7 @@ const SingleProduct = (props) => {
                     />
                   </svg>
                 </div>
-                {/* WhisList Logic End */}
+                {/* wishlist mantigi sonu */}
               </div>
             </Fragment>
           );

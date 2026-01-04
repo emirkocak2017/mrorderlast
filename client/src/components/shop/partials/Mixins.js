@@ -1,10 +1,10 @@
 export const subTotal = (id, price) => {
   let subTotalCost = 0;
   let carts = JSON.parse(localStorage.getItem("cart"));
-  // Güvenli Erişim: carts null/undefined ise forEach çağrılmaz
+  // guvenli erisim: carts null/undefined ise forEach cagrilmaz
   if (carts && Array.isArray(carts)) {
     carts.forEach((item) => {
-      // Eğer item veya item.id null ise, atla (silinmiş ürün)
+      // eger item veya item.id null ise, atla (silinmis urun)
       if (item && item.id === id) {
         subTotalCost = (item.quantitiy || 0) * (price || 0);
       }
@@ -16,10 +16,10 @@ export const subTotal = (id, price) => {
 export const quantity = (id) => {
   let product = 0;
   let carts = JSON.parse(localStorage.getItem("cart"));
-  // Güvenli Erişim: carts null/undefined ise forEach çağrılmaz
+  // guvenli erisim: carts null/undefined ise forEach cagrilmaz
   if (carts && Array.isArray(carts)) {
     carts.forEach((item) => {
-      // Eğer item veya item.id null ise, atla (silinmiş ürün)
+      // eger item veya item.id null ise, atla (silinmis urun)
       if (item && item.id === id) {
         product = item.quantitiy || 0;
       }
@@ -31,10 +31,10 @@ export const quantity = (id) => {
 export const totalCost = () => {
   let totalCost = 0;
   let carts = JSON.parse(localStorage.getItem("cart"));
-  // Güvenli Erişim: carts null/undefined ise forEach çağrılmaz
+  // guvenli erisim: carts null/undefined ise forEach cagrilmaz
   if (carts && Array.isArray(carts)) {
     carts.forEach((item) => {
-      // Eğer item null ise veya gerekli özellikler yoksa, atla (silinmiş ürün)
+      // eger item null ise veya gerekli ozellikler yoksa, atla (silinmis urun)
       if (item && item.quantitiy && item.price) {
         totalCost += (item.quantitiy || 0) * (item.price || 0);
       }

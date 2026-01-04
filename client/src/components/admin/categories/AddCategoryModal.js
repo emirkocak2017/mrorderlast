@@ -36,7 +36,7 @@ const AddCategoryModal = (props) => {
 
   const submitForm = async (e) => {
     dispatch({ type: "loading", payload: true });
-    // Reset and prevent the form
+    // formu resetle ve prevent et
     e.preventDefault();
     e.target.reset();
 
@@ -84,16 +84,16 @@ const AddCategoryModal = (props) => {
 
   return (
     <Fragment>
-      {/* Black Overlay */}
+      {/* siyah overlay */}
       <div
         onClick={(e) => dispatch({ type: "addCategoryModal", payload: false })}
         className={`${
           data.addCategoryModal ? "" : "hidden"
         } fixed top-0 left-0 z-30 w-full h-full bg-black opacity-50`}
       />
-      {/* End Black Overlay */}
+      {/* siyah overlay sonu */}
 
-      {/* Modal Start */}
+      {/* modal baslangic */}
       <div
         className={`${
           data.addCategoryModal ? "" : "hidden"
@@ -104,7 +104,7 @@ const AddCategoryModal = (props) => {
             <span className="text-left font-semibold text-2xl tracking-wider">
               Kategori Ekle
             </span>
-            {/* Close Modal */}
+            {/* modal kapat */}
             <span
               style={{ background: "#303031" }}
               onClick={(e) =>
@@ -166,7 +166,7 @@ const AddCategoryModal = (props) => {
                 rows={5}
               />
             </div>
-            {/* Image Field & function */}
+            {/* resim alani ve fonksiyonu */}
             <div className="flex flex-col space-y-1 w-full">
               <label htmlFor="name">Kategori Resmi</label>
               <input

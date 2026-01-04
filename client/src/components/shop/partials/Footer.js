@@ -8,7 +8,7 @@ const Footer = (props) => {
         style={{ background: "#303031", color: "#87898A" }}
         className="z-10 py-6 px-4 md:px-12 text-center"
       >
-        Developed & Designed by Emir,Şefik and Nilüfer  © Copyright {moment().format("YYYY")}
+        Emir, Şefik ve Nilüfer tarafından geliştirildi ve tasarlandı  © Telif Hakkı {moment().format("YYYY")}
       </footer>
     </Fragment>
   );

@@ -1,6 +1,7 @@
 import React, { Fragment, useContext, useEffect } from "react";
 import { DashboardContext } from "./";
 import { GetAllData } from "./Action";
+import { Pie, Line } from "react-chartjs-2";
 
 const DashboardCard = (props) => {
   const { data, dispatch } = useContext(DashboardContext);
@@ -12,7 +13,7 @@ const DashboardCard = (props) => {
 
   return (
     <Fragment>
-      {/* Card Start */}
+      {/* kart baslangic */}
       <div className="m-4 grid grid-cols-1 md:grid-cols-4 row-gap-4 col-gap-4">
         <div className="flex flex-col justify-center items-center col-span-1 bg-white p-6 shadow-lg hover:shadow-none cursor-pointer transition-all duration-300 ease-in border-b-4 border-opacity-0 hover:border-opacity-100 border-indigo-200">
           <div className="bg-indigo-200 p-2 cursor-pointer rounded-full">
@@ -139,7 +140,74 @@ const DashboardCard = (props) => {
           <div className="text-lg font-medium">Kategoriler</div>
         </div>
       </div>
-      {/* End Card */}
+      {/* kart sonu */}
+      {/* grafikler */}
+      <div className="m-4 grid grid-cols-1 md:grid-cols-2 gap-4">
+        {/* siparis durumu pie chart */}
+        <div className="bg-white p-6 shadow-lg">
+          <h3 className="text-xl font-bold mb-4">Sipariş Durumları</h3>
+          <Pie
+            data={{
+              labels: ["Bekliyor", "İşleniyor", "Kargoda", "Teslim Edildi", "İptal Edildi"],
+              datasets: [
+                {
+                  data: [12, 8, 15, 45, 5],
+                  backgroundColor: [
+                    "#EF4444",
+                    "#F59E0B",
+                    "#3B82F6",
+                    "#10B981",
+                    "#DC2626",
+                  ],
+                },
+              ],
+            }}
+            options={{
+              responsive: true,
+              maintainAspectRatio: true,
+              plugins: {
+                legend: {
+                  position: "bottom",
+                },
+              },
+            }}
+          />
+        </div>
+        {/* son 7 gun satis line chart */}
+        <div className="bg-white p-6 shadow-lg">
+          <h3 className="text-xl font-bold mb-4">Son 7 Gün Satışlar</h3>
+          <Line
+            data={{
+              labels: ["Pzt", "Sal", "Çar", "Per", "Cum", "Cmt", "Paz"],
+              datasets: [
+                {
+                  label: "Satış (₺)",
+                  data: [1200, 1900, 3000, 2500, 2200, 3000, 3500],
+                  borderColor: "#3B82F6",
+                  backgroundColor: "rgba(59, 130, 246, 0.1)",
+                  tension: 0.4,
+                },
+              ],
+            }}
+            options={{
+              responsive: true,
+              maintainAspectRatio: true,
+              plugins: {
+                legend: {
+                  display: true,
+                  position: "top",
+                },
+              },
+              scales: {
+                y: {
+                  beginAtZero: true,
+                },
+              },
+            }}
+          />
+        </div>
+      </div>
+      {/* grafikler sonu */}
     </Fragment>
   );
 };

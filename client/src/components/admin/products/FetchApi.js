@@ -23,12 +23,12 @@ export const getAllProduct = async (sort = 'newest') => {
 };
 
 export const createPorductImage = async ({ pImage }) => {
-  /* Most important part for uploading multiple image  */
+  /* coklu resim yuklemek icin en onemli kısım  */
   let formData = new FormData();
   for (const file of pImage) {
     formData.append("pImage", file);
   }
-  /* Most important part for uploading multiple image  */
+  /* coklu resim yuklemek icin en onemli kısım  */
 };
 
 export const createProduct = async ({
@@ -44,12 +44,12 @@ export const createProduct = async ({
   offer,
   offerPrice,
 }) => {
-  /* Most important part for uploading multiple image  */
+  /* coklu resim yuklemek icin en onemli kısım  */
   let formData = new FormData();
   for (const file of pImage) {
     formData.append("pImage", file);
   }
-  /* Most important part for uploading multiple image  */
+  /* coklu resim yuklemek icin en onemli kısım  */
   formData.append("pName", pName);
   formData.append("pDescription", pDescription);
   formData.append("pStatus", pStatus);

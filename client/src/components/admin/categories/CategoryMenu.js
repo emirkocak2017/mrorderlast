@@ -10,7 +10,7 @@ const CategoryMenu = (props) => {
     <Fragment>
       <div className="col-span-1 flex items-center">
         <div className="flex flex-col space-y-4 md:flex-row md:justify-between md:items-center w-full">
-          {/* It's open the add category modal */}
+          {/* kategori ekle modal'ini acar */}
           <div
             style={{ background: "#303031" }}
             onClick={(e) =>

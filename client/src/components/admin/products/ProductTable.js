@@ -40,7 +40,7 @@ const AllProduct = (props) => {
     }
   };
 
-  /* This method call the editmodal & dispatch product context */
+  /* bu method editmodal'i cagirir ve product context'i dispatch eder */
   const editProduct = (pId, product, type) => {
     if (type) {
       dispatch({
@@ -123,7 +123,7 @@ const AllProduct = (props) => {
   );
 };
 
-/* Single Product Component */
+/* tekil urun component'i */
 const ProductTable = ({ product, deleteProduct, editProduct }) => {
   return (
     <Fragment>

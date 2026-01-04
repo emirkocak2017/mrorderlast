@@ -37,7 +37,8 @@ export const pay = async (
   setState,
   getPaymentProcess,
   totalCost,
-  history
+  history,
+  discount = 0
 ) => {
   console.log(state);
   if (!state.address) {
@@ -52,7 +53,7 @@ export const pay = async (
         dispatch({ type: "loading", payload: true });
         nonce = data.nonce;
         let paymentData = {
-          amountTotal: totalCost(),
+          amountTotal: Math.max(0, totalCost() - (discount || 0)),
           paymentMethod: nonce,
         };
         getPaymentProcess(paymentData)
@@ -61,7 +62,7 @@ export const pay = async (
               let orderData = {
                 allProduct: JSON.parse(localStorage.getItem("cart")),
                 user: JSON.parse(localStorage.getItem("jwt")).user._id,
-                amount: res.transaction.amount,
+                amount: Math.max(0, totalCost() - (discount || 0)),
                 transactionId: res.transaction.id,
                 address: state.address,
                 phone: state.phone,

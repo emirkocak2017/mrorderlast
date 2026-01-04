@@ -38,7 +38,7 @@ const AllCategory = (props) => {
     }
   };
 
-  /* This method call the editmodal & dispatch category context */
+  /* bu method editmodal'i cagirir ve category context'i dispatch eder */
   const editCategory = (cId, type, des, status) => {
     if (type) {
       dispatch({
@@ -106,7 +106,7 @@ const AllCategory = (props) => {
                   colSpan="7"
                   className="text-xl text-center font-semibold py-8"
                 >
-                  No category found
+                  Kategori bulunamadı
                 </td>
               </tr>
             )}
@@ -120,7 +120,7 @@ const AllCategory = (props) => {
   );
 };
 
-/* Single Category Component */
+/* tekil kategori component'i */
 const CategoryTable = ({ category, deleteCat, editCat }) => {
   return (
     <Fragment>

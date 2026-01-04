@@ -74,21 +74,21 @@ const LiveSales = () => {
 
   const getVideoUrl = (videoUrl) => {
     if (!videoUrl) return null;
-    // Handle YouTube URLs
+    // youtube url'lerini handle et
     if (videoUrl.includes('youtube.com') || videoUrl.includes('youtu.be')) {
       const videoId = videoUrl.match(/(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/\s]{11})/);
       if (videoId) {
         return `https://www.youtube.com/embed/${videoId[1]}?autoplay=1&mute=1&controls=1&loop=1&playlist=${videoId[1]}`;
       }
     }
-    // Handle Vimeo URLs
+    // vimeo url'lerini handle et
     if (videoUrl.includes('vimeo.com')) {
       const videoId = videoUrl.match(/vimeo.com\/(\d+)/);
       if (videoId) {
         return `https://player.vimeo.com/video/${videoId[1]}?autoplay=1&muted=1&loop=1`;
       }
     }
-    // Direct video URL
+    // direkt video url'i
     return videoUrl;
   };
 
@@ -121,7 +121,7 @@ const LiveSales = () => {
   return (
     <Layout>
       <div className="min-h-screen bg-gray-100">
-        {/* Back Button */}
+        {/* geri butonu */}
         <button
           onClick={() => history.push('/')}
           className="fixed top-4 left-4 z-50 p-3 rounded-full bg-white shadow-lg hover:bg-gray-100 transition-all"
@@ -131,14 +131,14 @@ const LiveSales = () => {
           </svg>
         </button>
 
-        {/* Product Counter */}
+        {/* urun sayaci */}
         <div className="fixed top-4 right-4 z-50 bg-white shadow-lg text-gray-800 px-4 py-2 rounded-full text-sm font-semibold">
           {currentIndex + 1} / {products.length}
         </div>
 
-        {/* Split Screen Layout */}
+        {/* ekrani bol layout */}
         <div className="flex flex-col lg:flex-row h-screen pt-16 lg:pt-0">
-          {/* Left Side - Video */}
+          {/* sol taraf - video */}
           <div className="w-full lg:w-1/2 h-1/2 lg:h-full bg-black relative overflow-hidden">
             {videoUrl ? (
               videoUrl.includes('youtube.com') || videoUrl.includes('youtu.be') || videoUrl.includes('vimeo.com') ? (
@@ -170,10 +170,10 @@ const LiveSales = () => {
             )}
           </div>
 
-          {/* Right Side - Product Info */}
+          {/* sag taraf - urun bilgisi */}
           <div className="w-full lg:w-1/2 h-1/2 lg:h-full bg-white overflow-y-auto">
             <div className="p-6 md:p-12">
-              {/* Product Image */}
+              {/* urun resmi */}
               <div className="mb-6">
                 <img
                   src={`${apiURL}/uploads/products/${currentProduct.pImages[0]}`}
@@ -182,17 +182,17 @@ const LiveSales = () => {
                 />
               </div>
 
-              {/* Product Name */}
+              {/* urun ismi */}
               <h1 className="text-3xl md:text-4xl font-bold mb-4 text-gray-800">
                 {currentProduct.pName}
               </h1>
 
-              {/* Product Description */}
+              {/* urun aciklamasi */}
               <p className="text-gray-600 mb-6 leading-relaxed">
                 {currentProduct.pDescription}
               </p>
 
-              {/* Price Section */}
+              {/* fiyat bolumu */}
               <div className="mb-6">
                 {currentProduct.offer && currentProduct.offerPrice > 0 ? (
                   <div className="flex items-center space-x-4">
@@ -213,7 +213,7 @@ const LiveSales = () => {
                 )}
               </div>
 
-              {/* Stock Status */}
+              {/* stok durumu */}
               <div className="mb-6">
                 {currentProduct.pQuantity > 0 ? (
                   <span className="inline-block bg-green-100 text-green-800 px-4 py-2 rounded-lg font-semibold">
@@ -226,7 +226,7 @@ const LiveSales = () => {
                 )}
               </div>
 
-              {/* Add to Cart Button */}
+              {/* sepete ekle butonu */}
               <button
                 onClick={() => handleAddToCart(currentProduct)}
                 disabled={currentProduct.pQuantity === 0}
@@ -239,7 +239,7 @@ const LiveSales = () => {
                 {currentProduct.pQuantity > 0 ? 'Sepete Ekle' : 'Stokta Yok'}
               </button>
 
-              {/* Category */}
+              {/* kategori */}
               {currentProduct.pCategory && (
                 <div className="text-sm text-gray-500 mb-4">
                   Kategori: <span className="font-semibold">{currentProduct.pCategory.cName}</span>
@@ -249,7 +249,7 @@ const LiveSales = () => {
           </div>
         </div>
 
-        {/* Navigation Arrows */}
+        {/* navigasyon oklari */}
         <div className="fixed bottom-8 left-1/2 transform -translate-x-1/2 z-50 flex space-x-4">
           <button
             onClick={handlePrev}

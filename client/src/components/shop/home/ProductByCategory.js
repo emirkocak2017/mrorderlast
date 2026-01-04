@@ -9,7 +9,7 @@ const Submenu = ({ category }) => {
   const history = useHistory();
   return (
     <Fragment>
-      {/* Submenu Section */}
+      {/* alt menu bolumu */}
       <section className="mx-4 mt-24 md:mx-12 md:mt-32 lg:mt-24">
         <div className="flex justify-between items-center">
           <div className="text-sm flex space-x-3">
@@ -39,7 +39,7 @@ const Submenu = ({ category }) => {
           </div>
         </div>
       </section>
-      {/* Submenu Section */}
+      {/* alt menu bolumu */}
     </Fragment>
   );
 };

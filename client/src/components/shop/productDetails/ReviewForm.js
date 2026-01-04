@@ -63,7 +63,7 @@ const ReviewForm = (props) => {
               E-posta adresiniz yayınlanmayacaktır. Zorunlu alanlar * ile işaretlenmiştir.
             </span>
           </div>
-          {/* Input Rating */}
+          {/* rating input'u */}
           <div className="mb-4">
             <fieldset
               onChange={(e) => setFdata({ ...fData, rating: e.target.value })}
@@ -127,7 +127,7 @@ const ReviewForm = (props) => {
               />
             </fieldset>
           </div>
-          {/* Review Form */}
+          {/* yorum formu */}
           <div className="space-y-4">
             <div className="flex flex-col">
               <label htmlFor="textArea">

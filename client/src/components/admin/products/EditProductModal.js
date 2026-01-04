@@ -103,7 +103,7 @@ const EditProductModal = (props) => {
 
   return (
     <Fragment>
-      {/* Black Overlay */}
+      {/* siyah overlay */}
       <div
         onClick={(e) =>
           dispatch({ type: "editProductModalClose", payload: false })
@@ -112,9 +112,9 @@ const EditProductModal = (props) => {
           data.editProductModal.modal ? "" : "hidden"
         } fixed top-0 left-0 z-30 w-full h-full bg-black opacity-50`}
       />
-      {/* End Black Overlay */}
+      {/* siyah overlay sonu */}
 
-      {/* Modal Start */}
+      {/* modal baslangic */}
       <div
         className={`${
           data.editProductModal.modal ? "" : "hidden"
@@ -125,7 +125,7 @@ const EditProductModal = (props) => {
             <span className="text-left font-semibold text-2xl tracking-wider">
               Ürün Düzenle
             </span>
-            {/* Close Modal */}
+            {/* modal kapat */}
             <span
               style={{ background: "#303031" }}
               onClick={(e) =>
@@ -206,7 +206,7 @@ const EditProductModal = (props) => {
                 rows={2}
               />
             </div>
-            {/* Most Important part for uploading multiple image */}
+            {/* coklu resim yuklemek icin en onemli kısım */}
             <div className="flex flex-col mt-4">
               <label htmlFor="image">Ürün Resimleri *</label>
               {editformData.pImages ? (
@@ -244,7 +244,7 @@ const EditProductModal = (props) => {
                 multiple
               />
             </div>
-            {/* Most Important part for uploading multiple image */}
+            {/* coklu resim yuklemek icin en onemli kısım */}
             <div className="flex space-x-1 py-4">
               <div className="w-1/2 flex flex-col space-y-1">
                 <label htmlFor="status">Ürün Durumu *</label>

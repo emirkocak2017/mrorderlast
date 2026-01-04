@@ -117,7 +117,7 @@ const ProductCategory = (props) => {
           </div>
         </div>
       </div>
-      {/* Sıralama Dropdown */}
+      {/* siralam dropdown'u */}
       <div className="flex justify-end my-4">
         <select
           value={sort}

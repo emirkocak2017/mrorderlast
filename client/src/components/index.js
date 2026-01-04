@@ -18,12 +18,12 @@ import { UserProfile, UserOrders, SettingUser } from "./shop/dashboardUser";
 
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
-/* Routing All page will be here */
+/* tum sayfa route'lari burada olacak */
 const Routes = (props) => {
   return (
     <Router>
       <Switch>
-        {/* Shop & Public Routes */}
+        {/* magaza ve public route'lar */}
         <Route exact path="/" component={Home} />
         <Route exact path="/wish-list" component={WishList} />
         <Route exact path="/products/:id" component={ProductDetails} />
@@ -40,9 +40,9 @@ const Routes = (props) => {
           path="/checkout"
           component={CheckoutPage}
         />
-        {/* Shop & Public Routes End */}
+        {/* magaza ve public route'lar sonu */}
 
-        {/* Admin Routes */}
+        {/* admin route'lar */}
         <AdminProtectedRoute
           exact={true}
           path="/admin/dashboard"
@@ -63,9 +63,9 @@ const Routes = (props) => {
           path="/admin/dashboard/orders"
           component={Orders}
         />
-        {/* Admin Routes End */}
+        {/* admin route'lar sonu */}
 
-        {/* User Dashboard */}
+        {/* kullanici dashboard'u */}
         <ProtectedRoute
           exact={true}
           path="/user/profile"
@@ -81,9 +81,9 @@ const Routes = (props) => {
           path="/user/setting"
           component={SettingUser}
         />
-        {/* User Dashboard End */}
+        {/* kullanici dashboard'u sonu */}
 
-        {/* 404 Page */}
+        {/* 404 sayfasi */}
         <Route component={PageNotFound} />
       </Switch>
     </Router>

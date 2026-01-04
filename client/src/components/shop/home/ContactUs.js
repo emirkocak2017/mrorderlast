@@ -13,7 +13,7 @@ const ContactUs = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Simulated form submission
+    // simule edilmis form gonderimi
     enqueueSnackbar('Mesajınız başarıyla gönderildi! En kısa sürede size dönüş yapacağız.', { variant: 'success' });
     setFormData({ name: "", email: "", subject: "", message: "" });
   };
@@ -27,7 +27,7 @@ const ContactUs = () => {
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-          {/* Contact Information */}
+          {/* iletisim bilgileri */}
           <div className="space-y-8">
             <div>
               <h2 className="text-2xl font-semibold mb-6">İletişim Bilgileri</h2>
@@ -90,7 +90,7 @@ const ContactUs = () => {
               </div>
             </div>
 
-            {/* Map Placeholder */}
+            {/* harita placeholder'i */}
             <div className="bg-gray-200 rounded-lg h-64 flex items-center justify-center">
               <div className="text-center text-gray-500">
                 <svg className="w-16 h-16 mx-auto mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -102,7 +102,7 @@ const ContactUs = () => {
             </div>
           </div>
 
-          {/* Contact Form */}
+          {/* iletisim formu */}
           <div>
             <h2 className="text-2xl font-semibold mb-6">Bize Mesaj Gönderin</h2>
             <form onSubmit={handleSubmit} className="space-y-6">

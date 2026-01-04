@@ -40,16 +40,16 @@ const UpdateOrderModal = (props) => {
 
   return (
     <Fragment>
-      {/* Black Overlay */}
+      {/* siyah overlay */}
       <div
         onClick={(e) => dispatch({ type: "updateOrderModalClose" })}
         className={`${
           data.updateOrderModal.modal ? "" : "hidden"
         } fixed top-0 left-0 z-30 w-full h-full bg-black opacity-50`}
       />
-      {/* End Black Overlay */}
+      {/* siyah overlay sonu */}
 
-      {/* Modal Start */}
+      {/* modal baslangic */}
       <div
         className={`${
           data.updateOrderModal.modal ? "" : "hidden"
@@ -60,7 +60,7 @@ const UpdateOrderModal = (props) => {
             <span className="text-left font-semibold text-2xl tracking-wider">
               Sipariş Güncelle
             </span>
-            {/* Close Modal */}
+            {/* modal kapat */}
             <span
               style={{ background: "#303031" }}
               onClick={(e) => dispatch({ type: "updateOrderModalClose" })}

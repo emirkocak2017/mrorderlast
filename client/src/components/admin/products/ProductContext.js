@@ -20,19 +20,19 @@ export const productState = {
 
 export const productReducer = (state, action) => {
   switch (action.type) {
-    /* Get all product */
+    /* tum urunleri getir */
     case "fetchProductsAndChangeState":
       return {
         ...state,
         products: action.payload,
       };
-    /* Create a product */
+    /* urun olustur */
     case "addProductModal":
       return {
         ...state,
         addProductModal: action.payload,
       };
-    /* Edit a product */
+    /* urun duzenle */
     case "editProductModalOpen":
       return {
         ...state,

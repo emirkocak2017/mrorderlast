@@ -1,9 +1,11 @@
 import React, { Fragment, useState, useEffect, useContext } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useHistory } from "react-router-dom";
 import { ProductDetailsContext } from "./index";
 import { LayoutContext } from "../layout";
 import Submenu from "./Submenu";
 import ProductDetailsSectionTwo from "./ProductDetailsSectionTwo";
+import moment from "moment";
+import { getAllProduct } from "../../admin/products/FetchApi";
 
 import { getSingleProduct } from "./FetchApi";
 import { cartListProduct } from "../partials/FetchApi";
@@ -92,7 +94,7 @@ const ProductDetailsSection = (props) => {
       </div>
     );
   } else if (!sProduct) {
-    return <div>No product</div>;
+    return <div>Ürün bulunamadı</div>;
   }
   return (
     <Fragment>
@@ -179,6 +181,12 @@ const ProductDetailsSection = (props) => {
                 <span className="text-xl tracking-wider text-yellow-700">
                   {sProduct.pPrice}₺
                 </span>
+              </div>
+              {/* tahmini teslimat tarihi */}
+              <div className="mt-2 text-sm text-gray-600">
+                Tahmini Teslimat: <strong>{moment().add(3, 'days').format('DD MMMM dddd')}</strong>
+              </div>
+              <div className="flex justify-between items-center">
                 <span>
                   <svg
                     onClick={(e) => isWishReq(e, sProduct._id, setWlist)}
@@ -234,9 +242,9 @@ const ProductDetailsSection = (props) => {
                     quantitiy === sProduct.pQuantity && "text-red-500"
                   }`}
                 >
-                  Quantity
+                  Miktar
                 </div>
-                {/* Quantity Button */}
+                {/* miktar butonu */}
                 {sProduct.pQuantity !== 0 ? (
                   <Fragment>
                     {layoutData.inCart == null ||
@@ -360,9 +368,9 @@ const ProductDetailsSection = (props) => {
                     </span>
                   </div>
                 )}
-                {/* Quantity Button End */}
+                {/* miktar butonu sonu */}
               </div>
-              {/* Incart and out of stock button */}
+              {/* sepette ve stokta yok butonu */}
               {sProduct.pQuantity !== 0 ? (
                 <Fragment>
                   {layoutData.inCart !== null &&
@@ -415,14 +423,115 @@ const ProductDetailsSection = (props) => {
                   )}
                 </Fragment>
               )}
-              {/* Incart and out of stock button End */}
+              {/* sepette ve stokta yok butonu sonu */}
+              {/* flash sale countdown */}
+              <div className="mt-4 p-3 bg-red-50 border border-red-200 rounded">
+                <div className="text-sm text-gray-700 mb-2">
+                  İndirimin bitmesine kalan süre:
+                </div>
+                <CountdownTimer />
+              </div>
             </div>
           </div>
         </div>
       </section>
-      {/* Product Details Section two */}
+      {/* benzer urunler bolumu */}
+      <RelatedProducts currentProduct={sProduct} />
+      {/* urun detaylari bolumu iki */}
       <ProductDetailsSectionTwo />
     </Fragment>
+  );
+};
+
+// countdown timer component
+const CountdownTimer = () => {
+  const [timeLeft, setTimeLeft] = useState({ hours: 2, minutes: 45, seconds: 12 });
+  
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setTimeLeft(prev => {
+        if (prev.seconds > 0) {
+          return { ...prev, seconds: prev.seconds - 1 };
+        } else if (prev.minutes > 0) {
+          return { ...prev, minutes: prev.minutes - 1, seconds: 59 };
+        } else if (prev.hours > 0) {
+          return { ...prev, hours: prev.hours - 1, minutes: 59, seconds: 59 };
+        } else {
+          return { hours: 23, minutes: 59, seconds: 59 };
+        }
+      });
+    }, 1000);
+    
+    return () => clearInterval(timer);
+  }, []);
+  
+  return (
+    <div className="text-2xl font-bold text-red-600">
+      {String(timeLeft.hours).padStart(2, '0')}:
+      {String(timeLeft.minutes).padStart(2, '0')}:
+      {String(timeLeft.seconds).padStart(2, '0')}
+    </div>
+  );
+};
+
+// benzer urunler component'i
+const RelatedProducts = ({ currentProduct }) => {
+  const history = useHistory();
+  const [relatedProducts, setRelatedProducts] = useState([]);
+  const [loading, setLoading] = useState(true);
+  
+  useEffect(() => {
+    const fetchRelated = async () => {
+      if (currentProduct?.pCategory?._id) {
+        try {
+          const responseData = await getAllProduct('newest');
+          if (responseData && responseData.Products) {
+            // ayni kategorideki urunleri filtrele ve mevcut urunu cikar
+            const filtered = responseData.Products
+              .filter(p => 
+                p.pCategory?._id === currentProduct.pCategory._id && 
+                p._id !== currentProduct._id
+              )
+              .slice(0, 4);
+            setRelatedProducts(filtered);
+          }
+        } catch (error) {
+          console.log(error);
+        } finally {
+          setLoading(false);
+        }
+      } else {
+        setLoading(false);
+      }
+    };
+    
+    fetchRelated();
+  }, [currentProduct]);
+  
+  if (loading) return null;
+  if (!relatedProducts || relatedProducts.length === 0) return null;
+  
+  return (
+    <section className="my-8">
+      <h2 className="text-2xl font-bold mb-4">Benzer Ürünler</h2>
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+        {relatedProducts.map((product) => (
+          <div 
+            key={product._id} 
+            className="cursor-pointer border rounded p-2 hover:shadow-lg transition-shadow"
+            onClick={() => history.push(`/products/${product._id}`)}
+          >
+            <img
+              className="w-full h-32 object-cover rounded"
+              src={`${apiURL}/uploads/products/${product?.pImages?.[0] || ''}`}
+              alt={product.pName}
+            />
+            <div className="mt-2 text-sm font-semibold truncate">{product.pName}</div>
+            <div className="text-yellow-700 font-bold">{product.pPrice}₺</div>
+          </div>
+        ))}
+      </div>
+    </section>
   );
 };
 

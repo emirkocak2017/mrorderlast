@@ -17,10 +17,10 @@ const SellTable = () => {
 
   const ordersList = () => {
     let newList = [];
-    // Güvenli Erişim: Orders null/undefined ise forEach çağrılmaz
+    // guvenli erisim: orders null/undefined ise forEach cagrilmaz
     if (data.totalOrders?.Orders && Array.isArray(data.totalOrders.Orders)) {
       data.totalOrders.Orders.forEach(function (elem) {
-        // Eğer elem null ise veya createdAt yoksa, atla
+        // eger elem null ise veya createdAt yoksa, atla
         if (elem && elem.createdAt) {
           if (moment(elem.createdAt).format("LL") === moment().format("LL")) {
             newList = [...newList, elem];
@@ -90,9 +90,9 @@ const TodayOrderTable = ({ order }) => {
       <tr>
         <td className="w-48 hover:bg-gray-200 p-2 flex flex-col space-y-1">
           {order.allProduct?.map((item, index) => {
-            // Güvenli Erişim: ?. operatörü (Optional Chaining)
+            // guvenli erisim: ?. operatoru (optional chaining)
             
-            // Eğer item kendisi null/undefined ise, atla
+            // eger item kendisi null/undefined ise, atla
             if (!item) {
               return (
                 <div key={index} className="flex space-x-2">
@@ -105,7 +105,7 @@ const TodayOrderTable = ({ order }) => {
             const productId = item?.id;
             const pName = productId?.pName;
             
-            // Eğer product.id null ise, silinmiş ürün olarak göster
+            // eger product.id null ise, silinmis urun olarak goster
             if (!productId || productId === null) {
               return (
                 <div key={index} className="flex space-x-2">
@@ -125,9 +125,9 @@ const TodayOrderTable = ({ order }) => {
         </td>
         <td className="p-2 text-left">
           {order.allProduct?.map((item, index) => {
-            // Güvenli Erişim: ?. operatörü (Optional Chaining)
+            // guvenli erisim: ?. operatoru (optional chaining)
             
-            // Eğer item kendisi null/undefined ise, atla
+            // eger item kendisi null/undefined ise, atla
             if (!item) {
               return (
                 <span key={index} className="text-red-500 text-xs">Deleted Product</span>
@@ -137,7 +137,7 @@ const TodayOrderTable = ({ order }) => {
             const productId = item?.id;
             const pImages = productId?.pImages;
             
-            // Eğer product.id null ise veya pImages yoksa, placeholder göster
+            // eger product.id null ise veya pImages yoksa, placeholder goster
             if (!productId || productId === null || !pImages || !Array.isArray(pImages) || pImages.length === 0 || !pImages[0]) {
               return (
                 <span key={index} className="text-red-500 text-xs">Deleted Product</span>
