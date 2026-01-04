@@ -96,6 +96,17 @@ const CategoryTable = ({ order, editOrder }) => {
       <tr className="border-b">
         <td className="w-48 hover:bg-gray-200 p-2 flex flex-col space-y-1">
           {order.allProduct.map((product, i) => {
+            // --- GÜNCELLEME: Ürün Silinmişse Kontrolü ---
+            if (!product.id) {
+              return (
+                <span className="block flex items-center space-x-2" key={i}>
+                  <span className="text-red-500 font-bold text-xs">Silinmiş Ürün</span>
+                  <span>{product.quantitiy}x</span>
+                </span>
+              );
+            }
+            // ---------------------------------------------
+            
             return (
               <span className="block flex items-center space-x-2" key={i}>
                 <img
@@ -142,9 +153,12 @@ const CategoryTable = ({ order, editOrder }) => {
         <td className="hover:bg-gray-200 p-2 text-center">
           {order.transactionId}
         </td>
-        <td className="hover:bg-gray-200 p-2 text-center">{order.user.name}</td>
+        {/* Kullanıcı silinmişse hata vermemesi için kontrol */}
         <td className="hover:bg-gray-200 p-2 text-center">
-          {order.user.email}
+          {order.user ? order.user.name : <span className="text-red-500">Silinmiş Üye</span>}
+        </td>
+        <td className="hover:bg-gray-200 p-2 text-center">
+          {order.user ? order.user.email : '-'}
         </td>
         <td className="hover:bg-gray-200 p-2 text-center">{order.phone}</td>
         <td className="hover:bg-gray-200 p-2 text-center">{order.address}</td>
