@@ -97,34 +97,43 @@ const OrderTable = ({ order, editOrder }) => {
       <tr className="border-b">
         <td className="w-48 hover:bg-gray-200 p-2 flex flex-col space-y-1">
           {/* HATA ÇÖZÜLEN KISIM BAŞLANGICI */}
-          {order.allProduct.map((product, i) => {
+          {order.allProduct?.map((product, i) => {
             // Güvenli Erişim: ?. operatörü (Optional Chaining)
             // product?.id?.pImages yazınca product veya id null ise kod patlamaz, undefined döner.
-            const pImages = product?.id?.pImages;
-            const pName = product?.id?.pName;
+            const productId = product?.id;
+            const pImages = productId?.pImages;
+            const pName = productId?.pName;
+            
+            // Eğer product.id null ise, silinmiş ürün olarak göster
+            if (!productId || productId === null) {
+              return (
+                <span className="block flex items-center space-x-2" key={i}>
+                  <span className="text-red-500">Deleted Product</span>
+                  <span className="text-xs font-semibold">({product?.quantitiy || 0}x)</span>
+                </span>
+              );
+            }
             
             return (
               <span className="block flex items-center space-x-2" key={i}>
                 {/* Resim Kontrolü */}
-                {pImages && pImages.length > 0 ? (
+                {pImages && Array.isArray(pImages) && pImages.length > 0 ? (
                   <img
                     className="w-8 h-8 object-cover object-center"
                     src={`${apiURL}/uploads/products/${pImages[0]}`}
                     alt="productImage"
                   />
                 ) : (
-                  <span className="w-8 h-8 bg-red-100 flex items-center justify-center text-xs text-red-500 font-bold rounded">
-                    X
-                  </span>
+                  <span className="text-red-500">Deleted Product</span>
                 )}
                 
                 {/* İsim Kontrolü */}
                 <span className="text-sm">
-                  {pName ? pName : <span className="text-red-500 italic">Silinmiş Ürün</span>}
+                  {pName || <span className="text-red-500">Deleted Product</span>}
                 </span>
                 
                 {/* Miktar */}
-                <span className="text-xs font-semibold">({product?.quantitiy}x)</span>
+                <span className="text-xs font-semibold">({product?.quantitiy || 0}x)</span>
               </span>
             );
           })}
