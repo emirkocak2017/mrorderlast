@@ -88,7 +88,7 @@ const AllOrders = (props) => {
   );
 };
 
-/* Tekil Sipariş Bileşeni (OrderTable) */
+/* Tekil Sipariş Satırı Bileşeni */
 const OrderTable = ({ order, editOrder }) => {
   const { dispatch } = useContext(OrderContext);
 
@@ -96,36 +96,39 @@ const OrderTable = ({ order, editOrder }) => {
     <Fragment>
       <tr className="border-b">
         <td className="w-48 hover:bg-gray-200 p-2 flex flex-col space-y-1">
-          {/* HATA ÇÖZÜMÜ BURADA */}
+          {/* HATA ÇÖZÜLEN KISIM BAŞLANGICI */}
           {order.allProduct.map((product, i) => {
-            // Güvenli Resim Kaynağı Oluşturma
-            // product.id?.pImages?.[0] yapısı verinin null olup olmadığını kontrol eder.
-            // Eğer veri yoksa kod patlamaz, sadece undefined döner.
-            const hasProduct = product && product.id;
-            const hasImage = hasProduct && product.id.pImages && product.id.pImages.length > 0;
+            // Güvenli Erişim: ?. operatörü (Optional Chaining)
+            // product?.id?.pImages yazınca product veya id null ise kod patlamaz, undefined döner.
+            const pImages = product?.id?.pImages;
+            const pName = product?.id?.pName;
             
             return (
               <span className="block flex items-center space-x-2" key={i}>
-                {hasImage ? (
+                {/* Resim Kontrolü */}
+                {pImages && pImages.length > 0 ? (
                   <img
                     className="w-8 h-8 object-cover object-center"
-                    src={`${apiURL}/uploads/products/${product.id.pImages[0]}`}
+                    src={`${apiURL}/uploads/products/${pImages[0]}`}
                     alt="productImage"
                   />
                 ) : (
-                  // Resim veya Ürün Yoksa Gösterilecek Kutu
-                  <span className="w-8 h-8 bg-gray-300 flex items-center justify-center text-xs text-red-500 font-bold">
+                  <span className="w-8 h-8 bg-red-100 flex items-center justify-center text-xs text-red-500 font-bold rounded">
                     X
                   </span>
                 )}
                 
+                {/* İsim Kontrolü */}
                 <span className="text-sm">
-                  {hasProduct ? product.id.pName : <span className="text-red-500">Silinmiş Ürün</span>}
+                  {pName ? pName : <span className="text-red-500 italic">Silinmiş Ürün</span>}
                 </span>
-                <span className="text-xs text-gray-600">({product.quantitiy}x)</span>
+                
+                {/* Miktar */}
+                <span className="text-xs font-semibold">({product?.quantitiy}x)</span>
               </span>
             );
           })}
+          {/* HATA ÇÖZÜLEN KISIM BİTİŞİ */}
         </td>
 
         <td className="hover:bg-gray-200 p-2 text-center cursor-default">
@@ -161,12 +164,12 @@ const OrderTable = ({ order, editOrder }) => {
         <td className="hover:bg-gray-200 p-2 text-center">
           {order.transactionId}
         </td>
-        {/* Kullanıcı Silinmişse Koruma */}
+        {/* Kullanıcı Kontrolü */}
         <td className="hover:bg-gray-200 p-2 text-center">
-            {order.user ? order.user.name : <span className="text-red-500">Silinmiş Kullanıcı</span>}
+            {order.user?.name || <span className="text-red-400">Silinmiş Kullanıcı</span>}
         </td>
         <td className="hover:bg-gray-200 p-2 text-center">
-            {order.user ? order.user.email : "-"}
+            {order.user?.email || "-"}
         </td>
         <td className="hover:bg-gray-200 p-2 text-center">{order.phone}</td>
         <td className="hover:bg-gray-200 p-2 text-center">{order.address}</td>
