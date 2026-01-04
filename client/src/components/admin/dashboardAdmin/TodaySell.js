@@ -17,10 +17,14 @@ const SellTable = () => {
 
   const ordersList = () => {
     let newList = [];
-    if (data.totalOrders.Orders !== undefined) {
+    // Güvenli Erişim: Orders null/undefined ise forEach çağrılmaz
+    if (data.totalOrders?.Orders && Array.isArray(data.totalOrders.Orders)) {
       data.totalOrders.Orders.forEach(function (elem) {
-        if (moment(elem.createdAt).format("LL") === moment().format("LL")) {
-          newList = [...newList, elem];
+        // Eğer elem null ise veya createdAt yoksa, atla
+        if (elem && elem.createdAt) {
+          if (moment(elem.createdAt).format("LL") === moment().format("LL")) {
+            newList = [...newList, elem];
+          }
         }
       });
     }

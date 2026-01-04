@@ -75,9 +75,11 @@ export const addToCart = (
   let cart = localStorage.getItem("cart")
     ? JSON.parse(localStorage.getItem("cart"))
     : [];
-  if (cart.length > 0) {
+  // Güvenli Erişim: cart null/undefined ise kontrol et
+  if (cart && Array.isArray(cart) && cart.length > 0) {
     cart.forEach((item) => {
-      if (item.id === id) {
+      // Eğer item veya item.id null ise, atla (silinmiş ürün)
+      if (item && item.id === id) {
         isObj = true;
       }
     });
