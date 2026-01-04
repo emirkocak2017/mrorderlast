@@ -85,22 +85,47 @@ const TodayOrderTable = ({ order }) => {
     <Fragment>
       <tr>
         <td className="w-48 hover:bg-gray-200 p-2 flex flex-col space-y-1">
-          {order.allProduct.map((item, index) => {
+          {order.allProduct?.map((item, index) => {
+            // Güvenli Erişim: ?. operatörü (Optional Chaining)
+            const productId = item?.id;
+            const pName = productId?.pName;
+            
+            // Eğer product.id null ise, silinmiş ürün olarak göster
+            if (!productId || productId === null) {
+              return (
+                <div key={index} className="flex space-x-2">
+                  <span className="text-red-500">Deleted Product</span>
+                  <span>{item?.quantitiy || 0}x</span>
+                </div>
+              );
+            }
+            
             return (
               <div key={index} className="flex space-x-2">
-                <span>{item.id.pName}</span>
-                <span>{item.quantitiy}x</span>
+                <span>{pName || <span className="text-red-500">Deleted Product</span>}</span>
+                <span>{item?.quantitiy || 0}x</span>
               </div>
             );
           })}
         </td>
         <td className="p-2 text-left">
-          {order.allProduct.map((item, index) => {
+          {order.allProduct?.map((item, index) => {
+            // Güvenli Erişim: ?. operatörü (Optional Chaining)
+            const productId = item?.id;
+            const pImages = productId?.pImages;
+            
+            // Eğer product.id null ise veya pImages yoksa, placeholder göster
+            if (!productId || productId === null || !pImages || !Array.isArray(pImages) || pImages.length === 0) {
+              return (
+                <span key={index} className="text-red-500 text-xs">Deleted Product</span>
+              );
+            }
+            
             return (
               <img
                 key={index}
                 className="w-12 h-12 object-cover"
-                src={`${apiURL}/uploads/products/${item.id.pImages[0]}`}
+                src={`${apiURL}/uploads/products/${pImages[0]}`}
                 alt="Pic"
               />
             );

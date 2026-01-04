@@ -29,16 +29,42 @@ const TableBody = ({ order }) => {
     <Fragment>
       <tr className="border-b">
         <td className="w-48 hover:bg-gray-200 p-2 flex flex-col space-y-1">
-          {order.allProduct.map((product, i) => {
+          {order.allProduct?.map((product, i) => {
+            // Güvenli Erişim: ?. operatörü (Optional Chaining)
+            const productId = product?.id;
+            const pImages = productId?.pImages;
+            const pName = productId?.pName;
+            
+            // Eğer product.id null ise, silinmiş ürün olarak göster
+            if (!productId || productId === null) {
+              return (
+                <span className="block flex items-center space-x-2" key={i}>
+                  <span className="text-red-500">Deleted Product</span>
+                  <span className="text-xs font-semibold">({product?.quantitiy || 0}x)</span>
+                </span>
+              );
+            }
+            
             return (
               <span className="block flex items-center space-x-2" key={i}>
-                <img
-                  className="w-8 h-8 object-cover object-center"
-                  src={`${apiURL}/uploads/products/${product.id.pImages[0]}`}
-                  alt="productImage"
-                />
-                <span>{product.id.pName}</span>
-                <span>{product.quantitiy}x</span>
+                {/* Resim Kontrolü */}
+                {pImages && Array.isArray(pImages) && pImages.length > 0 ? (
+                  <img
+                    className="w-8 h-8 object-cover object-center"
+                    src={`${apiURL}/uploads/products/${pImages[0]}`}
+                    alt="productImage"
+                  />
+                ) : (
+                  <span className="text-red-500">Deleted Product</span>
+                )}
+                
+                {/* İsim Kontrolü */}
+                <span className="text-sm">
+                  {pName || <span className="text-red-500">Deleted Product</span>}
+                </span>
+                
+                {/* Miktar */}
+                <span className="text-xs font-semibold">({product?.quantitiy || 0}x)</span>
               </span>
             );
           })}
