@@ -95,26 +95,19 @@ const CategoryTable = ({ order, editOrder }) => {
     <Fragment>
       <tr className="border-b">
         <td className="w-48 hover:bg-gray-200 p-2 flex flex-col space-y-1">
-          {order.allProduct.map((product, i) => {
-            // --- GÜNCELLEME: Ürün Silinmişse Kontrolü ---
-            if (!product.id || product.id === null) {
-              return (
-                <span className="block flex items-center space-x-2" key={i}>
-                  <span className="text-red-500 font-bold text-xs">Deleted Product</span>
-                  <span>{product.quantitiy}x</span>
-                </span>
-              );
-            }
-            // ---------------------------------------------
-            
+          {order.allProduct?.map((product, i) => {
             return (
               <span className="block flex items-center space-x-2" key={i}>
-                <img
-                  className="w-8 h-8 object-cover object-center"
-                  src={`${apiURL}/uploads/products/${product.id.pImages[0]}`}
-                  alt="productImage"
-                />
-                <span>{product.id.pName}</span>
+                {product.id && product.id?.pImages?.[0] ? (
+                  <img
+                    className="w-8 h-8 object-cover object-center"
+                    src={`${apiURL}/uploads/products/${product.id?.pImages?.[0]}`}
+                    alt="productImage"
+                  />
+                ) : (
+                  <span className="text-gray-400 text-xs">No Image</span>
+                )}
+                <span>{product.id?.pName || "Deleted Product"}</span>
                 <span>{product.quantitiy}x</span>
               </span>
             );
@@ -155,10 +148,10 @@ const CategoryTable = ({ order, editOrder }) => {
         </td>
         {/* Kullanıcı silinmişse hata vermemesi için kontrol */}
         <td className="hover:bg-gray-200 p-2 text-center">
-          {order.user ? order.user.name : <span className="text-red-500">Silinmiş Üye</span>}
+          {order.user?.name || <span className="text-red-500">Deleted User</span>}
         </td>
         <td className="hover:bg-gray-200 p-2 text-center">
-          {order.user ? order.user.email : '-'}
+          {order.user?.email || '-'}
         </td>
         <td className="hover:bg-gray-200 p-2 text-center">{order.phone}</td>
         <td className="hover:bg-gray-200 p-2 text-center">{order.address}</td>
