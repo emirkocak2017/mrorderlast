@@ -13,9 +13,9 @@ const Headers = () => {
   };
 };
 
-export const getAllProduct = async () => {
+export const getAllProduct = async (sort = 'newest') => {
   try {
-    let res = await axios.get(`${apiURL}/api/product/all-product`);
+    let res = await axios.get(`${apiURL}/api/product/all-product?sort=${sort}`);
     return res.data;
   } catch (error) {
     console.log(error);

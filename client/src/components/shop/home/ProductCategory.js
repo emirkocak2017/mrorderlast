@@ -1,9 +1,27 @@
-import React, { Fragment, useContext } from "react";
+import React, { Fragment, useContext, useState } from "react";
 import ProductCategoryDropdown from "./ProductCategoryDropdown";
 import { HomeContext } from "./index";
+import { getAllProduct } from "../../admin/products/FetchApi";
 
 const ProductCategory = (props) => {
   const { data, dispatch } = useContext(HomeContext);
+  const [sort, setSort] = useState('newest');
+
+  const handleSortChange = async (e) => {
+    const newSort = e.target.value;
+    setSort(newSort);
+    dispatch({ type: "loading", payload: true });
+    try {
+      let responseData = await getAllProduct(newSort);
+      if (responseData && responseData.Products) {
+        dispatch({ type: "setProducts", payload: responseData.Products });
+        dispatch({ type: "loading", payload: false });
+      }
+    } catch (error) {
+      console.log(error);
+      dispatch({ type: "loading", payload: false });
+    }
+  };
 
   return (
     <Fragment>
@@ -20,7 +38,7 @@ const ProductCategory = (props) => {
           }`}
         >
           <span className="text-md md:text-lg hover:text-yellow-700">
-            Categories
+            Kategoriler
           </span>
           <svg
             className="w-4 h-4 text-yellow-700"
@@ -49,7 +67,7 @@ const ProductCategory = (props) => {
               data.filterListDropdown ? "text-yellow-700" : ""
             }`}
           >
-            <span className="text-md md:text-lg">Filter</span>
+            <span className="text-md md:text-lg">Filtrele</span>
             <span>
               <svg
                 className="w-4 h-4 text-gray-700 text-yellow-700"
@@ -79,7 +97,7 @@ const ProductCategory = (props) => {
               data.searchDropdown ? "text-yellow-700" : ""
             }`}
           >
-            <span className="text-md md:text-lg">Search</span>
+            <span className="text-md md:text-lg">Ara</span>
             <span>
               <svg
                 className="w-4 h-4 text-gray-700 text-yellow-700"
@@ -98,6 +116,18 @@ const ProductCategory = (props) => {
             </span>
           </div>
         </div>
+      </div>
+      {/* Sıralama Dropdown */}
+      <div className="flex justify-end my-4">
+        <select
+          value={sort}
+          onChange={handleSortChange}
+          className="px-4 py-2 border focus:outline-none rounded-lg text-sm md:text-base"
+        >
+          <option value="newest">En Yeniler</option>
+          <option value="price-asc">Fiyat: Düşükten Yükseğe</option>
+          <option value="price-desc">Fiyat: Yüksekten Düşüğe</option>
+        </select>
       </div>
       <ProductCategoryDropdown />
     </Fragment>

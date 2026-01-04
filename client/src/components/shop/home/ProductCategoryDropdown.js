@@ -70,7 +70,7 @@ const FilterList = () => {
   const fetchData = async (price) => {
     if (price === "all") {
       try {
-        let responseData = await getAllProduct();
+        let responseData = await getAllProduct('newest');
         if (responseData && responseData.Products) {
           dispatch({ type: "setProducts", payload: responseData.Products });
         }
@@ -163,7 +163,7 @@ const Search = () => {
     dispatch({ type: "loading", payload: true });
     try {
       setTimeout(async () => {
-        let responseData = await getAllProduct();
+        let responseData = await getAllProduct('newest');
         if (responseData && responseData.Products) {
           setPa(responseData.Products);
           dispatch({ type: "loading", payload: false });

@@ -29,10 +29,23 @@ class Product {
 
   async getAllProduct(req, res) {
     try {
+      // Sıralama parametresini al
+      const sortParam = req.query.sort || 'newest';
+      let sortObject = {};
+      
+      // Sıralama tipine göre sortObject'i ayarla
+      if (sortParam === 'price-asc') {
+        sortObject = { pPrice: 1 }; // Fiyat: Düşükten Yükseğe
+      } else if (sortParam === 'price-desc') {
+        sortObject = { pPrice: -1 }; // Fiyat: Yüksekten Düşüğe
+      } else {
+        sortObject = { createdAt: -1 }; // En Yeniler (varsayılan)
+      }
+      
       let Products = await productModel
         .find({})
         .populate("pCategory", "_id cName")
-        .sort({ _id: -1 });
+        .sort(sortObject);
       if (Products) {
         return res.json({ Products });
       }

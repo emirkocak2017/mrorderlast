@@ -21,10 +21,10 @@ const SingleProduct = (props) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const fetchData = async () => {
+  const fetchData = async (sortParam = 'newest') => {
     dispatch({ type: "loading", payload: true });
     try {
-      let responseData = await getAllProduct();
+      let responseData = await getAllProduct(sortParam);
       setTimeout(() => {
         if (responseData && responseData.Products) {
           dispatch({ type: "setProducts", payload: responseData.Products });

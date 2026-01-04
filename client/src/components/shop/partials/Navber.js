@@ -94,7 +94,7 @@ const Navber = (props) => {
             <div
               onClick={(e) => history.push("/wish-list")}
               className="hover:bg-gray-200 rounded-lg px-2 py-2 cursor-pointer"
-              title="Wishlist"
+              title="İstek Listem"
             >
               <svg
                 className={`${
@@ -119,7 +119,7 @@ const Navber = (props) => {
               <Fragment>
                 <div
                   className="userDropdownBtn hover:bg-gray-200 px-2 py-2 rounded-lg relative"
-                  title="Logout"
+                  title="Çıkış Yap"
                 >
                   <svg
                     className="cursor-pointer w-8 h-8 text-gray-600 hover:text-gray-800"
@@ -159,7 +159,7 @@ const Navber = (props) => {
                                 />
                               </svg>
                             </span>
-                            <span>My Orders</span>
+                            <span>Siparişlerim</span>
                           </span>
                           <span
                             onClick={(e) => history.push("/user/profile")}
@@ -181,7 +181,7 @@ const Navber = (props) => {
                                 />
                               </svg>
                             </span>
-                            <span>My Account</span>
+                            <span>Hesabım</span>
                           </span>
                           <span
                             onClick={(e) => history.push("/wish-list")}
@@ -321,7 +321,7 @@ const Navber = (props) => {
               <div
                 onClick={(e) => loginModalOpen()}
                 className="cursor-pointer hover:bg-gray-200 px-2 py-2 rounded-lg"
-                title="Login"
+                  title="Giriş Yap"
               >
                 <svg
                   className="w-8 h-8 text-gray-600 hover:text-gray-800"
@@ -343,7 +343,7 @@ const Navber = (props) => {
             <div
               onClick={(e) => cartModalOpen()}
               className="hover:bg-gray-200 px-2 py-2 rounded-lg relative cursor-pointer"
-              title="Cart"
+                  title="Sepet"
             >
               <svg
                 className="w-8 h-8 text-gray-600 hover:text-gray-800"
