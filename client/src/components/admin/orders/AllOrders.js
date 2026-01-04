@@ -6,7 +6,7 @@ import { fetchData, editOrderReq, deleteOrderReq } from "./Actions";
 
 const apiURL = process.env.REACT_APP_API_URL;
 
-const AllCategory = (props) => {
+const AllOrders = (props) => {
   const { data, dispatch } = useContext(OrderContext);
   const { orders, loading } = data;
 
@@ -35,6 +35,7 @@ const AllCategory = (props) => {
       </div>
     );
   }
+
   return (
     <Fragment>
       <div className="col-span-1 overflow-auto bg-white shadow-lg p-4">
@@ -46,7 +47,7 @@ const AllCategory = (props) => {
               <th className="px-4 py-2 border">Toplam</th>
               <th className="px-4 py-2 border">İşlem ID</th>
               <th className="px-4 py-2 border">Müşteri</th>
-              <th className="px-4 py-2 border">E-posta</th>
+              <th className="px-4 py-2 border">Email</th>
               <th className="px-4 py-2 border">Telefon</th>
               <th className="px-4 py-2 border">Adres</th>
               <th className="px-4 py-2 border">Oluşturulma</th>
@@ -58,7 +59,7 @@ const AllCategory = (props) => {
             {orders && orders.length > 0 ? (
               orders.map((item, i) => {
                 return (
-                  <CategoryTable
+                  <OrderTable
                     key={i}
                     order={item}
                     editOrder={(oId, type, status) =>
@@ -73,46 +74,60 @@ const AllCategory = (props) => {
                   colSpan="12"
                   className="text-xl text-center font-semibold py-8"
                 >
-                  No order found
+                  Sipariş bulunamadı
                 </td>
               </tr>
             )}
           </tbody>
         </table>
         <div className="text-sm text-gray-600 mt-2">
-          Toplam {orders && orders.length} sipariş bulundu
+          Toplam {orders && orders.length} sipariş
         </div>
       </div>
     </Fragment>
   );
 };
 
-/* Single Category Component */
-const CategoryTable = ({ order, editOrder }) => {
+/* Tekil Sipariş Bileşeni (OrderTable) */
+const OrderTable = ({ order, editOrder }) => {
   const { dispatch } = useContext(OrderContext);
 
   return (
     <Fragment>
       <tr className="border-b">
         <td className="w-48 hover:bg-gray-200 p-2 flex flex-col space-y-1">
-          {order.allProduct?.map((product, i) => {
+          {/* HATA ÇÖZÜMÜ BURADA */}
+          {order.allProduct.map((product, i) => {
+            // Güvenli Resim Kaynağı Oluşturma
+            // product.id?.pImages?.[0] yapısı verinin null olup olmadığını kontrol eder.
+            // Eğer veri yoksa kod patlamaz, sadece undefined döner.
+            const hasProduct = product && product.id;
+            const hasImage = hasProduct && product.id.pImages && product.id.pImages.length > 0;
+            
             return (
               <span className="block flex items-center space-x-2" key={i}>
-                {product.id && product.id?.pImages?.[0] ? (
+                {hasImage ? (
                   <img
                     className="w-8 h-8 object-cover object-center"
-                    src={`${apiURL}/uploads/products/${product.id?.pImages?.[0]}`}
+                    src={`${apiURL}/uploads/products/${product.id.pImages[0]}`}
                     alt="productImage"
                   />
                 ) : (
-                  <span className="text-gray-400 text-xs">No Image</span>
+                  // Resim veya Ürün Yoksa Gösterilecek Kutu
+                  <span className="w-8 h-8 bg-gray-300 flex items-center justify-center text-xs text-red-500 font-bold">
+                    X
+                  </span>
                 )}
-                <span>{product.id?.pName || "Deleted Product"}</span>
-                <span>{product.quantitiy}x</span>
+                
+                <span className="text-sm">
+                  {hasProduct ? product.id.pName : <span className="text-red-500">Silinmiş Ürün</span>}
+                </span>
+                <span className="text-xs text-gray-600">({product.quantitiy}x)</span>
               </span>
             );
           })}
         </td>
+
         <td className="hover:bg-gray-200 p-2 text-center cursor-default">
           {order.status === "Not processed" && (
             <span className="block text-red-600 rounded-full text-center text-xs px-2 font-semibold">
@@ -146,12 +161,12 @@ const CategoryTable = ({ order, editOrder }) => {
         <td className="hover:bg-gray-200 p-2 text-center">
           {order.transactionId}
         </td>
-        {/* Kullanıcı silinmişse hata vermemesi için kontrol */}
+        {/* Kullanıcı Silinmişse Koruma */}
         <td className="hover:bg-gray-200 p-2 text-center">
-          {order.user?.name || <span className="text-red-500">Deleted User</span>}
+            {order.user ? order.user.name : <span className="text-red-500">Silinmiş Kullanıcı</span>}
         </td>
         <td className="hover:bg-gray-200 p-2 text-center">
-          {order.user?.email || '-'}
+            {order.user ? order.user.email : "-"}
         </td>
         <td className="hover:bg-gray-200 p-2 text-center">{order.phone}</td>
         <td className="hover:bg-gray-200 p-2 text-center">{order.address}</td>
@@ -205,4 +220,4 @@ const CategoryTable = ({ order, editOrder }) => {
   );
 };
 
-export default AllCategory;
+export default AllOrders;
