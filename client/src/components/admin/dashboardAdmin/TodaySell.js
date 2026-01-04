@@ -87,6 +87,17 @@ const TodayOrderTable = ({ order }) => {
         <td className="w-48 hover:bg-gray-200 p-2 flex flex-col space-y-1">
           {order.allProduct?.map((item, index) => {
             // Güvenli Erişim: ?. operatörü (Optional Chaining)
+            
+            // Eğer item kendisi null/undefined ise, atla
+            if (!item) {
+              return (
+                <div key={index} className="flex space-x-2">
+                  <span className="text-red-500">Deleted Product</span>
+                  <span>0x</span>
+                </div>
+              );
+            }
+            
             const productId = item?.id;
             const pName = productId?.pName;
             
@@ -111,11 +122,19 @@ const TodayOrderTable = ({ order }) => {
         <td className="p-2 text-left">
           {order.allProduct?.map((item, index) => {
             // Güvenli Erişim: ?. operatörü (Optional Chaining)
+            
+            // Eğer item kendisi null/undefined ise, atla
+            if (!item) {
+              return (
+                <span key={index} className="text-red-500 text-xs">Deleted Product</span>
+              );
+            }
+            
             const productId = item?.id;
             const pImages = productId?.pImages;
             
             // Eğer product.id null ise veya pImages yoksa, placeholder göster
-            if (!productId || productId === null || !pImages || !Array.isArray(pImages) || pImages.length === 0) {
+            if (!productId || productId === null || !pImages || !Array.isArray(pImages) || pImages.length === 0 || !pImages[0]) {
               return (
                 <span key={index} className="text-red-500 text-xs">Deleted Product</span>
               );

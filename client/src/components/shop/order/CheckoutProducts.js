@@ -174,29 +174,52 @@ const CheckoutProducts = ({ products }) => {
       <div className="grid grid-cols-2 md:grid-cols-1">
         {products !== null && products.length > 0 ? (
           products.map((product, index) => {
+            // Güvenli Erişim: ?. operatörü (Optional Chaining)
+            if (!product) {
+              return (
+                <div
+                  key={index}
+                  className="col-span-1 m-2 md:py-6 md:border-t md:border-b md:my-2 md:mx-0 md:flex md:items-center md:justify-between"
+                >
+                  <div className="md:flex md:items-center md:space-x-4">
+                    <span className="text-red-500">Deleted Product</span>
+                  </div>
+                </div>
+              );
+            }
+            
+            const pImages = product?.pImages;
+            const pName = product?.pName;
+            const pPrice = product?.pPrice;
+            const productId = product?._id;
+            
             return (
               <div
                 key={index}
                 className="col-span-1 m-2 md:py-6 md:border-t md:border-b md:my-2 md:mx-0 md:flex md:items-center md:justify-between"
               >
                 <div className="md:flex md:items-center md:space-x-4">
-                  <img
-                    onClick={(e) => history.push(`/products/${product._id}`)}
-                    className="cursor-pointer md:h-20 md:w-20 object-cover object-center"
-                    src={`${apiURL}/uploads/products/${product.pImages[0]}`}
-                    alt="wishListproduct"
-                  />
+                  {pImages && Array.isArray(pImages) && pImages.length > 0 && pImages[0] ? (
+                    <img
+                      onClick={(e) => productId && history.push(`/products/${productId}`)}
+                      className="cursor-pointer md:h-20 md:w-20 object-cover object-center"
+                      src={`${apiURL}/uploads/products/${pImages[0]}`}
+                      alt="wishListproduct"
+                    />
+                  ) : (
+                    <span className="text-red-500 md:h-20 md:w-20 flex items-center justify-center">No Image</span>
+                  )}
                   <div className="text-lg md:ml-6 truncate">
-                    {product.pName}
+                    {pName || <span className="text-red-500">Deleted Product</span>}
                   </div>
                   <div className="md:ml-6 font-semibold text-gray-600 text-sm">
-                    Fiyat : {product.pPrice}₺
+                    Fiyat : {pPrice || 0}₺
                   </div>
                   <div className="md:ml-6 font-semibold text-gray-600 text-sm">
-                    Miktar : {quantity(product._id)}
+                    Miktar : {productId ? quantity(productId) : 0}
                   </div>
                   <div className="font-semibold text-gray-600 text-sm">
-                    Ara Toplam : {subTotal(product._id, product.pPrice)}₺
+                    Ara Toplam : {productId && pPrice ? subTotal(productId, pPrice) : 0}₺
                   </div>
                 </div>
               </div>

@@ -31,6 +31,17 @@ const TableBody = ({ order }) => {
         <td className="w-48 hover:bg-gray-200 p-2 flex flex-col space-y-1">
           {order.allProduct?.map((product, i) => {
             // Güvenli Erişim: ?. operatörü (Optional Chaining)
+            
+            // Eğer product kendisi null/undefined ise, atla
+            if (!product) {
+              return (
+                <span className="block flex items-center space-x-2" key={i}>
+                  <span className="text-red-500">Deleted Product</span>
+                  <span className="text-xs font-semibold">(0x)</span>
+                </span>
+              );
+            }
+            
             const productId = product?.id;
             const pImages = productId?.pImages;
             const pName = productId?.pName;
@@ -48,7 +59,7 @@ const TableBody = ({ order }) => {
             return (
               <span className="block flex items-center space-x-2" key={i}>
                 {/* Resim Kontrolü */}
-                {pImages && Array.isArray(pImages) && pImages.length > 0 ? (
+                {pImages && Array.isArray(pImages) && pImages.length > 0 && pImages[0] ? (
                   <img
                     className="w-8 h-8 object-cover object-center"
                     src={`${apiURL}/uploads/products/${pImages[0]}`}
